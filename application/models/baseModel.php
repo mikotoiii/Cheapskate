@@ -13,10 +13,10 @@ class baseModel extends CI_Model {
 				
 				/**
 				 * Magic load a table
-				 * @param type $id
+				 * @param type mixed $id Can be an single int $id, or an array of objects with an id property
 				 * @return \BaseModel
 				 */
-				protected function load($id) {
+				public function load($id) {
 								
 								try {
 												$reflector = new ReflectionClass($this->clazz);
@@ -25,20 +25,53 @@ class baseModel extends CI_Model {
 												error_log($e);
 								}
 
-								$properties = $reflector->getProperties(ReflectionProperty::IS_PRIVATE);
-								$q = "select * from {$table} where id={$id}";
-								$query = $this->db->query($q);
-								$result = $query->result();
+								$properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
 								
-								foreach ($properties as $property) {
-												try {
-																$this->{$property->getName()} = $result->{$property->getName()};
-												} catch (Exception $e) {
-																error_log($e);
+								if (is_numeric($id)) {
+												$q = "select * from `{$table}` where id={$id}";
+								} else if (is_array($id)) {
+												$q = "select * from `{$table}` where ";
+												$q .= $this->getIdString($id);
+								}
+								$query = $this->db->query($q);
+								$results = $query->result();
+								$venues = array();
+								
+								foreach ($results as $result) {
+												foreach ($properties as $property) {
+																if ($property->class !== $table) {
+																				continue;
+																}
+
+																try {
+																				$this->{$property->name} = $result->{$property->name};
+																} catch (Exception $e) {
+																				error_log($e);
+																}
+												}
+												
+												$venues[] = $this;
+								}
+								
+								return $venues; // load is for a single instance, right?
+				}
+				
+				protected function doQuery($q) {
+								$query = $this->db->query($q);
+								return $query->result();
+				}
+				
+				private function getIdString($array) {
+								$str = "";
+								$arSize = count($array);
+								
+								for ($i = 0; $i < $arSize; $i++) {
+												$str .= "id=" . $array[$i]->id;
+												if ($i != $arSize - 1) {
+																$str .= " or ";
 												}
 								}
 								
-								return $this;
+								return $str;
 				}
-				
 }

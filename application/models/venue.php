@@ -1,30 +1,31 @@
 <?php
-class venue extends BaseModel {
-				
-				private $id;
-				private $name;
-				private $locationNum;
-				private $categoryId;
-				private $city;
-				private $province;
-				private $address1;
-				private $address2;
-				private $mapHash;
-				private $phone;
-				private $email;
-				private $website;
-				private $facebook;
-				private $twitter;
-				private $instagram;
-				private $hipFactor;
-				private $scaryFactor;
-				private $hasLiveMusic;
-				private $musicType;
-				private $promoterId;
-				private $status;
+include 'baseModel.php';
+
+class venue extends baseModel {
+				public $id;
+				public $name;
+				public $locationNum;
+				public $categoryId;
+				public $city;
+				public $province;
+				public $address1;
+				public $address2;
+				public $mapHash;
+				public $phone;
+				public $email;
+				public $website;
+				public $facebook;
+				public $twitter;
+				public $instagram;
+				public $hipFactor;
+				public $scaryFactor;
+				public $hasLiveMusic;
+				public $musicType;
+				public $promoterId;
+				public $status;
 
     public function venue() {
-								parent::__construct(class_name()); // Needs to be here
+								parent::__construct(get_class()); // Needs to be here
         $this->load->database();
     }
 				
@@ -44,6 +45,11 @@ class venue extends BaseModel {
 								throw new BadMethodCallException("Method Not Yet Implemented. Please write it.");
 				}
 				
+				public function findAllVenues() {
+								$q = "select id from venue";
+								return $this->load($this->doQuery($q));
+				}
+				
 				public function findAllVenuesByCity($city) {
 								throw new BadMethodCallException("Method Not Yet Implemented. Please write it.");
 				}
@@ -53,4 +59,8 @@ class venue extends BaseModel {
 				}
 				
 				
+				public function getName() {
+								return $this->name;
+				}
+
 }

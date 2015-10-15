@@ -10,7 +10,7 @@ CREATE TABLE venue (
     city varchar(100) NOT NULL default 'Saint John',
     province varchar(2) NOT NULL default 'NB',
     address1 varchar(100) NOT NULL,
-    address2 varchar(100) NOT NULL,
+    address2 varchar(100) NULL,
     mapHash varchar(200) NULL,
     phone varchar(12) NULL,
     email varchar(100) NULL,
