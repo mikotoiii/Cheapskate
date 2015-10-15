@@ -29,16 +29,12 @@ class venue extends baseModel {
         $this->load->database();
     }
 				
-				
-				
 				public function getVenueById($id) {
 								return $this->load($id);
 				}
 				
 				public function findVenueByName($name) {
-								$venues = array();
-								
-								return $venues;
+								throw new BadMethodCallException("Method Not Yet Implemented. Please write it.");
 				}
 				
 				public function findClosestVenue($origin) {

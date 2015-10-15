@@ -13,6 +13,16 @@ var weekdays = new Array(7);
 
 // Init on DOM Load Stuff
 $(function () {
+    
+    // load venues
+    var venueData;
+    $.ajax({
+        url: "http://localhost/cheapskate/index.php/CheapskateAPI/findAllVenues",
+        success: function(result) {
+            venueData = result
+            console.log(venueData);
+        }
+    });
 
     $('.flexslider').flexslider({
         slideshow: false,

@@ -4,6 +4,7 @@
  * Inherit this, add your properties, and call load.
  * Your database fields must be named EXACTLY the same as the properties
  * Then everything works like magic and you'll love it.
+ * The only properties that get JSON encoded are public. Oh well.
  */
 class baseModel extends CI_Model {
 				private $clazz = null;
@@ -23,6 +24,7 @@ class baseModel extends CI_Model {
 												$table = $reflector->getShortName();
 								} catch (Exception $e) {
 												error_log($e);
+												die;
 								}
 
 								$properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
@@ -47,15 +49,21 @@ class baseModel extends CI_Model {
 																				$this->{$property->name} = $result->{$property->name};
 																} catch (Exception $e) {
 																				error_log($e);
+																				die;
 																}
 												}
 												
-												$venues[] = $this;
+												$venues[] = clone($this);
 								}
 								
 								return $venues; // load is for a single instance, right?
 				}
 				
+				/**
+				 * A barely convenient method 
+				 * @param type string $q The query string
+				 * @return array
+				 */
 				protected function doQuery($q) {
 								$query = $this->db->query($q);
 								return $query->result();

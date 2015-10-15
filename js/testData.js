@@ -71,6 +71,7 @@ var testData = {
     ]
 };
 
+/*
 var venueData = [
     {
         id: 0,
@@ -104,3 +105,4 @@ var venueData = [
         scaryFactor: 0
     }
 ];
+*/
