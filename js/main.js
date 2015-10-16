@@ -19,7 +19,7 @@ $(function () {
     $.ajax({
         url: "http://localhost/cheapskate/index.php/CheapskateAPI/findAllVenues",
         success: function(result) {
-            venueData = result
+            venueData = result;
             console.log(venueData);
         }
     });
