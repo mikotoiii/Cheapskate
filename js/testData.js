@@ -24,7 +24,7 @@ var testData = {
             day: 0,
             deals: [
                 {
-                    venue: "Grannans",
+                    venueId: 1,
                     category: "drinks",
                     type: "bogo",
                     price: "",
@@ -38,7 +38,7 @@ var testData = {
                     coverAmount: 0
                 },
                 {
-                    venue: "Steamers",
+                    venueId: 3,
                     category: "food",
                     type: "offer",
                     info: "Barely poison",
@@ -46,7 +46,7 @@ var testData = {
                     timeEnd: 2200
                 },
                 {
-                    venue: "Peppers",
+                    venueId: 4,
                     category: "drinks",
                     type: "2-Can-Dine",
                     info: "2 kan dine fer regaler pric",
@@ -59,7 +59,7 @@ var testData = {
             day: 1,
             deals: [
                 {
-                    venue: "Peppers",
+                    venueId: 5,
                     category: "food",
                     type: "Apps",
                     info: "1 for 1 appos with purchase of many full-price drinks!",

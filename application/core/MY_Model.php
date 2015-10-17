@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Base Model.
  * Inherit this, add your properties, and call load.
@@ -8,7 +10,7 @@
  */
 class baseModel extends CI_Model {
 				private $clazz = null;
-				public function baseModel($clazz) {
+				public function __construct($clazz) {
 								$this->clazz = $clazz;
 				}
 				
@@ -28,16 +30,16 @@ class baseModel extends CI_Model {
 								}
 
 								$properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
-								
 								if (is_numeric($id)) {
 												$q = "select * from `{$table}` where id={$id}";
-								} else if (is_array($id)) {
+								} else if (is_array($id) && count($id) > 0) {
 												$q = "select * from `{$table}` where ";
 												$q .= $this->getIdString($id);
 								}
 								$query = $this->db->query($q);
 								$results = $query->result();
-								$venues = array();
+								
+								$items = array();
 								
 								foreach ($results as $result) {
 												foreach ($properties as $property) {
@@ -49,19 +51,20 @@ class baseModel extends CI_Model {
 																				$this->{$property->name} = $result->{$property->name};
 																} catch (Exception $e) {
 																				error_log($e);
-																				die;
+																				//die;
 																}
 												}
 												
-												$venues[] = clone($this);
+												$items[] = clone($this);
 								}
 								
-								return $venues; // load is for a single instance, right?
+								return $items; // load is for a single instance, right?
 				}
 				
 				/**
 				 * A barely convenient method 
 				 * @param type string $q The query string
+				 * @param string add something after the where clause
 				 * @return array
 				 */
 				protected function doQuery($q) {
@@ -83,3 +86,5 @@ class baseModel extends CI_Model {
 								return $str;
 				}
 }
+
+class My_Model { } // CI needs this

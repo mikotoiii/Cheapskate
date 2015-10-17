@@ -1,3 +1,6 @@
+"use strict";
+
+var venueData;
 
 //set current day
 var curDay = new Date().getDay();
@@ -15,12 +18,14 @@ var weekdays = new Array(7);
 $(function () {
     
     // load venues
-    var venueData;
     $.ajax({
         url: "http://localhost/cheapskate/index.php/CheapskateAPI/findAllVenues",
         success: function(result) {
-            venueData = result;
+            venueData = JSON.parse(result);
             console.log(venueData);
+        },
+        complete: function() {
+            populateDays();  
         }
     });
 
@@ -30,22 +35,20 @@ $(function () {
         slideToStart: curDay,
         animationDuration: 200
     });
-
-    populateDays();
     
     $(".venueTextLink").click(function(e) {
-        var venue = findVenueByName(e.target.innerText);
-        $("#daysContainer").toggle();
-        $("#venueDetailsContainer").toggle({
-            duration:200,
-            done: function() {
-                populateVenue(venue);
-            }
-        });
-        
-        initialize();
-    });
-    
+                var venue = findVenueByName(e.target.innerText);
+                $("#daysContainer").toggle();
+                $("#venueDetailsContainer").toggle({
+                    duration:200,
+                    done: function() {
+                        populateVenue(venue);
+                    }
+                });
+
+                initialize();
+            });
+
     $("#venueDetailsCloseBtn").click(function(e) {
         $("#daysContainer").show();
         $("#venueDetailsContainer").hide();
@@ -81,9 +84,7 @@ function populateDeals(day) {
     $.each(deals, function() {
         var deal = deals[index];
         var li = $("<li class='dealItem'></li>");
-        var venue = findVenueByName(deal.venue);
-        
-        
+        var venue = getVenue(deal.venueId);
         li.append("<i class='fa fa-" + getCategoryIcon(deal.category) + "'></i>");
         li.append("<div class='venue venueTextLink'>" + venue.name + "</div>");
         li.append("<div class='category'>" + deal.category + " | " + deal.type) + "</div>";
@@ -134,7 +135,18 @@ function findVenueByName(name) {
             return venueData[i];
     }
     
-    console.warning("Couldn't find venue: " + name);
+    console.warn("Couldn't find venue: " + name);
+    return null;
+}
+
+function getVenue(id) {
+    for (var i = 0; i < venueData.length; i++) {
+        console.log(venueData[i]);
+        if (venueData[i].hasOwnProperty("id") && (venueData[i].id == id))
+            return venueData[i];
+    }
+    
+    console.warn("Couldn't find venue: " + id);
     return null;
 }
 
