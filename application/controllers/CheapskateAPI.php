@@ -15,7 +15,7 @@ class CheapskateAPI extends MY_Controller {
 				}
 				
 				public function findAllVenues() {
-								$this->load->model('venue');
+								$this->load->model('Venue_model');
 								$venues = $this->venue->findAllVenues();
 								
 								self::printJson($venues);
@@ -26,8 +26,8 @@ class CheapskateAPI extends MY_Controller {
 												throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
 								}
 																
-								$this->load->model('user');
-								$this->load->model('venue');
+								$this->load->model('User_model');
+								$this->load->model('Venue_model');
 								
 								$user = $this->user->load($userId);
 								$user = $user[0];
@@ -42,7 +42,7 @@ class CheapskateAPI extends MY_Controller {
 												throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
 								}
 																
-								$this->load->model('venue');
+								$this->load->model('Venue_model');
 
 								$venues = $this->venue->findAllVenuesByProximity($lat, $long, $radius);
 								
@@ -53,15 +53,15 @@ class CheapskateAPI extends MY_Controller {
 								if (!is_numeric($num)) {
 												throw new UnexpectedValueException("findTopOptimalEvents(): You must provide an integer.");
 								}
-								$this->load->model('event');
+								$this->load->model('Event_model');
 								$events = $this->event->getTopOptimalEvents($num);
 								
 								self::printJson($events);
 				}
 				
 				public function testUserLocation() {
-								$this->load->model('venue');
-								$this->load->model('user');
+								$this->load->model('Venue_model');
+								$this->load->model('User_model');
 								$this->load->helper("location");
 								
 								$me = $this->user->load(1);
@@ -84,7 +84,7 @@ class CheapskateAPI extends MY_Controller {
 								if (!is_numeric($userId)) {
 												throw new UnexpectedValueException("getUser(): You must provide an integer.");
 								}
-								$this->load->model('user');
+								$this->load->model('User_model');
 								
 								$user = $this->user->load(1);
 								$user = $user[0];

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class venue extends baseModel {
+class Venue_model extends baseModel {
 				public $id;
 				public $name;
 				public $locationNum;

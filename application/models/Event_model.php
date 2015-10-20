@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * The event is what happens. Events can have live bands, drink specials,
  * food specials, discounts, whatever.
  */
-class event extends baseModel {
+class Event_model extends baseModel {
 				
 				public $id;
 				public $dealId;
