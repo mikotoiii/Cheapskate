@@ -1,11 +1,13 @@
 "use strict";
 
 var venueData;
+var curVenue;
+var user;
 
 //set current day
-var curDay = new Date().getDay();
+var curDay;
 
-var weekdays = new Array(7);
+var weekdays = [];
     weekdays[0] = "Sunday";
     weekdays[1] = "Monday";
     weekdays[2] = "Tuesday";
@@ -16,38 +18,54 @@ var weekdays = new Array(7);
 
 // Init on DOM Load Stuff
 $(function () {
+    getUserLocation(function() {});
+    curDay  = new Date().getDay();
+    $("#dayTitle").text(getDayName(curDay));
     
     // load venues
     $.ajax({
-        url: "http://localhost/cheapskate/index.php/CheapskateAPI/findAllVenues",
+        url: "/cheapskate/CheapskateAPI/findVenuesInRadius/1",
+        dataType: "json",
         success: function(result) {
-            venueData = JSON.parse(result);
-            console.log(venueData);
+            venueData = result;
         },
         complete: function() {
             populateDays();  
         }
+    });
+    
+    $.ajax({
+        url: "/cheapskate/CheapskateAPI/getUser/1",
+        dataType: "json",
+        success: function(result) {
+            user = result;
+        },
     });
 
     $('.flexslider').flexslider({
         slideshow: false,
         controlNav: false,
         slideToStart: curDay,
+        after: function() {
+            var theDay = trimLetters($("#daysContainer li:visible").attr("id"));
+            $("#dayTitle").text(getDayName(theDay));
+        },
         animationDuration: 200
     });
     
-    $(".venueTextLink").click(function(e) {
-                var venue = findVenueByName(e.target.innerText);
-                $("#daysContainer").toggle();
-                $("#venueDetailsContainer").toggle({
-                    duration:200,
-                    done: function() {
-                        populateVenue(venue);
-                    }
-                });
-
-                initialize();
-            });
+    $(document).on("click", ".venueTextLink", function(e) {
+        var venue = getVenue($(e.target).data("id"));
+        curVenue = venue;
+        initMap();
+        $("#daysContainer").toggle();
+        $("#venueDetailsContainer").toggle({
+            duration:200,
+            done: function() {
+                populateVenue(venue);
+                
+            }
+        });
+    });
 
     $("#venueDetailsCloseBtn").click(function(e) {
         $("#daysContainer").show();
@@ -63,7 +81,8 @@ function populateDays() {
         $(ele).addClass("clearfix");
 
         $(ele).data("day", day);
-        $(ele).append(dayMarkupFactory(day), null);
+        $(ele).append(dayMarkupFactory(), null);
+        $("#dayTitle").text(getDayName(day));
         
         populateDeals(day);
     });
@@ -80,33 +99,30 @@ function populateDeals(day) {
     var deals = data.deals;
     
     var ul = $("#day" + day + " ul");
-    var index = 0;
-    $.each(deals, function() {
-        var deal = deals[index];
+    $.each(deals, function(ind) {
+        var deal = deals[ind];
         var li = $("<li class='dealItem'></li>");
         var venue = getVenue(deal.venueId);
         li.append("<i class='fa fa-" + getCategoryIcon(deal.category) + "'></i>");
-        li.append("<div class='venue venueTextLink'>" + venue.name + "</div>");
+        li.append("<div class='venue venueTextLink' data-id='" + deal.venueId + "'>" + venue.name + "</div>");
         li.append("<div class='category'>" + deal.category + " | " + deal.type) + "</div>";
-        li.append("<div class='time'><i class='fa fa-clock-o'></i> " + deal.timeStart + " - " + deal.timeEndyup + "</div>");
+        li.append("<div class='time'><i class='fa fa-clock-o'></i> " + deal.timeStart + " - " + deal.timeEnd + "</div>");
         li.append("<div class='info'>" + deal.info + "</div>");
 
         ul.append(li);
-        index++;
     });
     
 }
 
 function populateVenue(venue) {
     $("#venueTitle").append("<div>" + venue.name + "</div>");
-    $("#venueDetails").append("<div>" + venue.details + "</div>");
-    $("#venueMap").append("<div>" + getVenueMap(venue) + "</div>");
+    $("#venueDetails").append("<div>" + venue.info + "</div>");
+    $("#venueDetails").append("<div id='directions-panel'></div>");
+    //$("#venueMap").append("<div>" + getVenueMap(venue) + "</div>"); 
 }
 
-function dayMarkupFactory(day, data) {
-    return "<div class='dayTitle'>" + getDayName(day) + "</div><div class='dayWrapper'>" +
-            "<ul class='dealList'></ul>";
-            
+function dayMarkupFactory() {
+    return "<div class='dayWrapper'><ul class='dealList'></ul></div>";
 }
 
 function getDayName(day) {
@@ -141,7 +157,6 @@ function findVenueByName(name) {
 
 function getVenue(id) {
     for (var i = 0; i < venueData.length; i++) {
-        console.log(venueData[i]);
         if (venueData[i].hasOwnProperty("id") && (venueData[i].id == id))
             return venueData[i];
     }
@@ -149,4 +164,3 @@ function getVenue(id) {
     console.warn("Couldn't find venue: " + id);
     return null;
 }
-

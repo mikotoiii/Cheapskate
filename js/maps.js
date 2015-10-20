@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var map, userLoc, service, infowindow, userCurPos, watchId;
+var map, userLoc, service, infowindow, userCurPos, watchId, venue;
 var userTravelMode = "walking";
 var directionsService = new google.maps.DirectionsService();
 var userLocWatchOptions = {
@@ -16,13 +16,10 @@ var userLocWatchOptions = {
 };
 
 
-function initialize() {
-
+function initializeMap(v) {
+    venue = v;
     getUserLocation(function () {
-
     });
-
-
 }
 
 function processPlacesResponse(results, status) {
@@ -40,12 +37,10 @@ function getUserLocation(callback) {
         watchId = navigator.geolocation.watchPosition(locSuccess, locError, userLocWatchOptions);
     }
     callback();
-
 }
 
 function locSuccess(pos) {
     userCurPos = pos;
-
     updateMap();
 }
 
@@ -55,6 +50,7 @@ function locError() {
 
 function updateMap() {
     userLoc = new google.maps.LatLng(userCurPos.coords.latitude, userCurPos.coords.longitude);
+    venueLoc = new google.maps.LatLng(venue.latitude, venue.longitude);
 
     map = new google.maps.Map(document.getElementById('map-canvas'), {
         center: userLoc,
@@ -64,8 +60,7 @@ function updateMap() {
     var request = {
         location: userLoc,
         keyword: "Peppers Pub",
-        radius: '500'//,
-                //types: ['store']
+        radius: '500'
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -104,7 +99,7 @@ function getDirections(destinationLoc) {
     
     directionsService.route(request, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
+            map.setDirections(response);
         }
     });
 }
@@ -113,4 +108,19 @@ function getVenueMap(venue) {
     
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+function updateUserLocation() {
+    var data = [];
+    data["userId"] = 1;
+    data["latitude"]  = userCurPos.coords.latitude;
+    data["longitude"] = userCurPos.coords.longitude;
+    
+    $.ajax({
+        data: data,
+        dataType:"json",
+        success: function() {},
+        complete: function() {},
+        fail: function() {}
+    });
+}
+
+//google.maps.event.addDomListener(window, 'load', initializeMap);

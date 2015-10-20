@@ -7,6 +7,8 @@ INSERT INTO venue SET name='Saint John Ale House', address1='1 Market Sq.', venu
 INSERT INTO venue SET name='Pub Down Under', address1='400 Main St.', venueTypeId=1, locationNum=1, latitude='45.2747807', longitude='-66.0788047';
 INSERT INTO venue SET name='The Capital Complex', address1='362 Queen St.', city='Fredericton',  venueTypeId=1, locationNum=1, latitude='45.963421', longitude='-66.6462601';
 INSERT INTO venue SET name='The Cellar Pub', address1='21 Pacey Dr.', city='Fredericton', venueTypeId=1, locationNum=1, latitude='45.9453608', longitude='66.6435921';
+INSERT INTO venue SET name='Rockeys Sports Bar', address1='7 Market Sq.', venueTypeId=1, locationNum=1, latitude='45.2732597', longitude='-66.0654489';
+INSERT INTO venue SET name='Churchills Pub', address1='10 Grannan St.', venueTypeId=1, locationNum=1, latitude='45.2717136', longitude='-66.0631271';
 
 INSERT INTO event SET name='BOGO!', venueId=5, eventTypeId=1, submittedById=1, coverTypeId=1;
 INSERT INTO deal SET name='Buy-One-Get-One all beer, shots, wine', dealTypeId=2, eventId=1, timeStart='Sunday-2100', timeEnd='Sunday-2200';
@@ -61,6 +63,8 @@ INSERT INTO dealType SET name='BOGO', info='';
 INSERT INTO dealType SET name='Power Hour', info='';
 INSERT INTO dealType SET name='With Purchase Special', info='';
 INSERT INTO dealType SET name='Appetizer Special', info='';
+INSERT INTO dealType SET name='Birthday Discount', info='';
+INSERT INTO dealType SET name='Birthday Freebee', info='';
 
 INSERT INTO venueType SET name='Pub';
 INSERT INTO venueType SET name='Bar';
@@ -70,5 +74,5 @@ INSERT INTO venueType SET name='Live Music Venue';
 INSERT INTO venueType SET name='Arena';
 INSERT INTO venueType SET name='';
 
-INSERT INTO user SET userName='boyer', lastLocationLat='45.271111', lastLocationLong='-66.059719', nameFirst='Sean', nameLast='Boyer', email='seanboyer.sj@gmail.com', userRoleId=1;
+INSERT INTO user SET userName='boyer', lastLocationLat='45.271111', lastLocationLong='-66.059719', nameFirst='Sean', nameLast='Boyer', email='seanboyer.sj@gmail.com', userRoleId=1, dob='1985-01-10';
 INSERT INTO userRole SET userId=1, roleId=1;

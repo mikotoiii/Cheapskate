@@ -48,7 +48,9 @@ class baseModel extends CI_Model {
 																}
 
 																try {
-																				$this->{$property->name} = $result->{$property->name};
+																				if (isset($result->{$property->name})) {
+																								$this->{$property->name} = $result->{$property->name};
+																				}
 																} catch (Exception $e) {
 																				error_log($e);
 																				//die;

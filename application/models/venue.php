@@ -13,7 +13,7 @@ class venue extends baseModel {
 				public $province;
 				public $address1;
 				public $address2;
-				public $mapHash;
+				public $googleMapLocationId;
 				public $latitude;
 				public $longitude;
 				public $phone;
@@ -24,6 +24,8 @@ class venue extends baseModel {
 				public $instagram;
 				public $hipFactor;
 				public $scaryFactor;
+				public $classFactor;
+				public $trashFactor;
 				public $hasLiveMusic;
 				public $musicType;
 				public $promoterId;

@@ -6,6 +6,7 @@ class user extends baseModel {
 				public $userName;
 				public $nameFirst;
 				public $nameLast;
+				public $dob;
 				public $city;
 				public $province;
 				public $phone;
@@ -15,6 +16,7 @@ class user extends baseModel {
 				public $lastLocationLat;
 				public $lastLocationLong;
 				public $unitType;
+				public $travelType;
 				public $defaultDistanceRange;
 				public $lastSeen;
 				

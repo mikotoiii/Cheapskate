@@ -2,7 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 error_reporting(0);
 
-class CheapskateAPI extends CI_Controller {
+class CheapskateAPI extends MY_Controller {
+				
+//				public function __construct()	{
+//					//			parent::__construct();
+//				}
 
 				public function index() {
 								//$this->load->view('welcome_message');
@@ -21,7 +25,7 @@ class CheapskateAPI extends CI_Controller {
 								if (!is_numeric($userId)) {
 												throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
 								}
-								
+																
 								$this->load->model('user');
 								$this->load->model('venue');
 								
@@ -60,6 +64,26 @@ class CheapskateAPI extends CI_Controller {
 								//echo "To Peps: " . $distanceToPeps . ", To Capital: " . $distanceToCap;
 								
 								self::printJson($capital);
+				}
+				
+				/** User Stuff **/
+				
+				public function getUser($userId) {
+								if (!is_numeric($userId)) {
+												throw new UnexpectedValueException("getUser(): You must provide an integer.");
+								}
+								$this->load->model('user');
+								
+								$user = $this->user->load(1);
+								$user = $user[0];
+								
+								self::printJson($user);
+				}
+				
+				public function updateUser($userId) {
+								if (!isset($_POST)) {
+												throw new AuthException("You're not logged in!");
+								}
 				}
 				
 				/**
