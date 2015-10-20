@@ -37,6 +37,18 @@ class CheapskateAPI extends MY_Controller {
 								self::printJson($venues);
 				}
 				
+				public function findVenuesWithLocation($radius, $lat, $long) {
+								if (!is_numeric($radius) || !is_numeric($lat) || !is_numeric($long)) {
+												throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
+								}
+																
+								$this->load->model('venue');
+
+								$venues = $this->venue->findAllVenuesByProximity($lat, $long, $radius);
+								
+								self::printJson($venues);
+				}
+				
 				public function findTopOptimalEvents($num = 6) {
 								if (!is_numeric($num)) {
 												throw new UnexpectedValueException("findTopOptimalEvents(): You must provide an integer.");

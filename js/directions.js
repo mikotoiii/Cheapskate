@@ -1,8 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+"use strict";
 
 var googleMapsPlaceId;
 var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + googleMapsPlaceId;
@@ -23,8 +19,9 @@ function getUserLocation(callback) {
     if (navigator.geolocation) {
         watchId = navigator.geolocation.watchPosition(locSuccess, locError, userLocWatchOptions);
     } else {
-        
+        window.alert("Enable your location, please");
     }
+    
     callback();
 }
 
@@ -39,7 +36,7 @@ function locError() {
 function initMap() {
 
     userLoc  = {lat: parseFloat(user.lastLocationLat), lng: parseFloat(user.lastLocationLong)};
-    venueLoc = {lat: parseFloat(curVenue.latitude), lng: parseFloat(curVenue.longitude)};
+    venueLoc = {lat: parseFloat(curVenue.latitude),    lng: parseFloat(curVenue.longitude)};
  
     map = new google.maps.Map(document.getElementById('map-canvas'), {
         center: userLoc,
@@ -60,7 +57,9 @@ function initMap() {
     function processDistanceDetails(response) {
         var distanceDetails = [];
         distanceDetails["distance"] = response.legs[0].distance.value; // metres
+        distanceDetails["distanceText"] = response.legs[0].distance.text // "4 km"
         distanceDetails["time"] = response.legs[0].duration.value; //seconds
+        distanceDetails["timeText"] = response.legs[0].duration.text; //4 mins
     }
     
     directionsService.route(request, function (response, status) {
