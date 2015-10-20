@@ -97,7 +97,7 @@ $db['default'] = array(
 
 $db['prod'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
+	'hostname' => '127.8.5.2',
 	'username' => 'adminkt2XwTC',
 	'password' => 'Tyg-g32fHqAU',
 	'database' => 'cheapskate',
