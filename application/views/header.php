@@ -1,4 +1,5 @@
-<?php	defined('BASEPATH')	OR	exit('No direct script access allowed');	?><!DOCTYPE HTML>
+<?php	defined('BASEPATH')	OR	exit('No direct script access allowed');	?>
+<!DOCTYPE HTML>
 <html>
 				<head>
 								<title>Cheapskate</title>

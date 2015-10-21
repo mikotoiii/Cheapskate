@@ -1,10 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
+/**
+ * The man controller. This will handle the template generation,
+ * adding of JS and CSS resources, and probably Auth stuff
+ */
 class MY_Controller extends CI_Controller {
 				
 				protected $javascripts = array();
+				protected $css = array();
 				
 				public function __construct()	{
 								parent::__construct();	
@@ -35,5 +39,12 @@ class MY_Controller extends CI_Controller {
 								$this->javascripts[] = $js;
 				}
 				
+				/**
+				 * Add a CSS resource to the head
+				 * @param string $css the path/filename without the .css extension
+				 */
+				public function addCss($css) {
+								$this->css[] = $css;
+				}
+				
 }
-

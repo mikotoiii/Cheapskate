@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-error_reporting(0);
+error_reporting(1);
 
 class CheapskateAPI extends MY_Controller {
 				
@@ -16,7 +16,7 @@ class CheapskateAPI extends MY_Controller {
 				
 				public function findAllVenues() {
 								$this->load->model('Venue_model');
-								$venues = $this->venue->findAllVenues();
+								$venues = $this->Venue_model->findAllVenues();
 								
 								self::printJson($venues);
 				}
@@ -29,10 +29,9 @@ class CheapskateAPI extends MY_Controller {
 								$this->load->model('User_model');
 								$this->load->model('Venue_model');
 								
-								$user = $this->user->load($userId);
+								$user = $this->User_model->load($userId);
 								$user = $user[0];
-								
-								$venues = $this->venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
+								$venues = $this->Venue_model->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
 								
 								self::printJson($venues);
 				}
@@ -44,7 +43,7 @@ class CheapskateAPI extends MY_Controller {
 																
 								$this->load->model('Venue_model');
 
-								$venues = $this->venue->findAllVenuesByProximity($lat, $long, $radius);
+								$venues = $this->Venue_model->findAllVenuesByProximity($lat, $long, $radius);
 								
 								self::printJson($venues);
 				}
@@ -54,7 +53,7 @@ class CheapskateAPI extends MY_Controller {
 												throw new UnexpectedValueException("findTopOptimalEvents(): You must provide an integer.");
 								}
 								$this->load->model('Event_model');
-								$events = $this->event->getTopOptimalEvents($num);
+								$events = $this->Event_model->getTopOptimalEvents($num);
 								
 								self::printJson($events);
 				}
@@ -64,11 +63,11 @@ class CheapskateAPI extends MY_Controller {
 								$this->load->model('User_model');
 								$this->load->helper("location");
 								
-								$me = $this->user->load(1);
+								$me = $this->User_model->load(1);
 								$me = $me[0];
-								$peppers = $this->venue->load(1);
+								$peppers = $this->Venue_model->load(1);
 								$peppers = $peppers[0];
-								$capital = $this->venue->load(7);
+								$capital = $this->Venue_model->load(7);
 								$capital = $capital[0];
 								
 								$distanceToPeps = getDistance($me->lastLocationLat,	$me->lastLocationLong,	$peppers->latitude,	$peppers->longitude);
@@ -86,7 +85,7 @@ class CheapskateAPI extends MY_Controller {
 								}
 								$this->load->model('User_model');
 								
-								$user = $this->user->load(1);
+								$user = $this->User_model->load(1);
 								$user = $user[0];
 								
 								self::printJson($user);

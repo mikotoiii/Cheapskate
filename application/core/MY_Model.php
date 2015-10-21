@@ -23,7 +23,7 @@ class baseModel extends CI_Model {
 								
 								try {
 												$reflector = new ReflectionClass($this->clazz);
-												$table = $reflector->getShortName();
+												$table = strtolower(str_ireplace("_model", "", $reflector->getShortName()));
 								} catch (Exception $e) {
 												error_log($e);
 												die;
@@ -43,7 +43,7 @@ class baseModel extends CI_Model {
 								
 								foreach ($results as $result) {
 												foreach ($properties as $property) {
-																if ($property->class !== $table) {
+																if (strtolower(str_ireplace("_model", "", $property->class)) !== $table) {
 																				continue;
 																}
 

@@ -16,7 +16,7 @@
 
 /* FlexSlider Necessary Styles
 *********************************/ 
-.flexslider {/* height: auto; */width: 80%;  padding: 0;margin-left: auto;margin-right: auto;}
+.flexslider {/* height: auto; */width: 100%;  padding: 0;margin-left: auto;margin-right: auto;}
 .flexslider .slides > li {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides img {max-width: 100%; display: block;}
 .flex-pauseplay span {text-transform: capitalize;}

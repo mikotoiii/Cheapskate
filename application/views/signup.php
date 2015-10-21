@@ -3,7 +3,7 @@
 								<header>
 												<h2>Signup!</h2>
 								</header>
-								<div class="container">
+								<div class="container 50%">
 												<section>
 																<form method="post" action="signup/submit">
 																				<div>
