@@ -24,7 +24,7 @@ $(function () {
     
     // load venues
     $.ajax({
-        url: "/cheapskate/CheapskateAPI/findVenuesInRadius/1",
+        url: "CheapskateAPI/findVenuesInRadius/1",
         dataType: "json",
         success: function(result) {
             venueData = result;
@@ -35,7 +35,7 @@ $(function () {
     });
     
     $.ajax({
-        url: "/cheapskate/CheapskateAPI/getUser/1",
+        url: "CheapskateAPI/getUser/1",
         dataType: "json",
         success: function(result) {
             user = result;
