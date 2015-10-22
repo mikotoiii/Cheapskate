@@ -60,7 +60,7 @@ class baseModel extends CI_Model {
 												$items[] = clone($this);
 								}
 								
-								return $items; // load is for a single instance, right?
+								return $items;
 				}
 				
 				/**

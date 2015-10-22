@@ -5,12 +5,14 @@ class Login extends MY_Controller {
 				
 				public function index() {
 								$this->addJavascript("vendor/facebookLogin");
-								$this->load->view('login');
+								$this->showView('login');
 				}
 				
-				public function doLogin() {
+				public function submit() {
 								if (!isset($_POST)) {
 												throw new Exception("Gotta use post to login, baby girl!");
 								}
+								
+								
 				}
 }
