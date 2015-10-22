@@ -32,10 +32,10 @@
 								</article>
 				</div>
 				<!-- Scripts -->
-				<script src="js/vendor/jquery-1.9.1.min.js"></script>
-				<script src="js/vendor/skel.min.js"></script>
-				<script src="js/vendor/skel-viewport.min.js"></script>
-				<script src="js/util.js"></script>
+				<script src="assets/js/vendor/jquery-1.9.1.min.js"></script>
+				<script src="assets/js/vendor/skel.min.js"></script>
+				<script src="assets/js/vendor/skel-viewport.min.js"></script>
+				<script src="assets/js/util.js"></script>
 				
 				<? foreach ($javascripts as $js) {
 								$external = (stripos($js, '//') !== false);
