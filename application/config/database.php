@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$active_group = 'default'; 
+switch (ENVIRONMENT) {
+	case 'development':
+		$active_group = 'default';
+		break;
+	default: 
+		$active_group = 'prod';
+	break;
+}
+
 $query_builder = TRUE;
 
 $db['default'] = array(
