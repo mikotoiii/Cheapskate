@@ -6,34 +6,34 @@ $config = array(
 								array(
 												'field' => 'userName', 
 												'label' => 'Username', 
-												'rules' => 'required|alpha_dash'
+												'rules' => 'required|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
 								),
 								array(
 												'field' => 'password', 
 												'label' => 'Password', 
-												'rules' => 'required'
+												'rules' => 'required|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
 								)
 				),
 				"signup" => array(
 								array(
 												'field' => 'userName', 
 												'label' => 'Username', 
-												'rules' => 'required|alpha_dash'
+												'rules' => 'required|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
 								),
 								array(
 												'field' => 'password', 
 												'label' => 'Password', 
-												'rules' => 'required|alpha_dash'
+												'rules' => '|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
 								),
 								array(
 												'field' => 'passconf', 
 												'label' => 'Confirm Password', 
-												'rules' => 'required|alpha_dash|matches[password]'
+												'rules' => '|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
 								),
 								array(
 												'field' => 'email', 
 												'label' => 'Email', 
-												'rules' => 'required|alpha_dash|valid_email'
+												'rules' => '|trim|alpha_dash|xss_clean|min_length[7]|max_length[50]|valid_email'
 								)
 				)
 );

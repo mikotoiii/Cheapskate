@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 
  */
-class Deal_model extends baseModel {
+class Deal extends baseModel {
 
 				public $id;
     public $eventId;

@@ -11,7 +11,9 @@ class Login extends MY_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->library('session');
-        $this->load->model('User_model');
+        $this->load->model('User');
+        
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
     }
 
     public function index() {
@@ -23,40 +25,39 @@ class Login extends MY_Controller {
         if (!isset($_POST)) {
             throw new Exception("Gotta use post to login, baby girl!");
         }
-
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-
-        if ($this->form_validation->run() == FALSE) {
-            if (isset($this->session->userdata['logged_in'])) {
-                $this->load->view('admin_page');
+        
+        if ($this->form_validation->run('login') === false) {
+            if (isset($this->session->userdata['userLoggedIn'])) {
+            $this->showView("home");
             } else {
-                $this->load->view('login_form');
+                $this->showView("login");
             }
         } else {
             $data = array(
-                'username' => $this->input->post('username'),
+                'userName' => $this->input->post('userName'),
                 'password' => $this->input->post('password'),
             );
+            
             $result = $this->login_database->login($data);
+            
             if ($result == TRUE) {
 
-                $username = $this->input->post('username');
+                $username = $this->input->post('useNname');
                 $result   = $this->login_database->read_user_information($username);
                 if ($result != false) {
-                    $session_data = array(
-                        'username' => $result[0]->user_name,
-                        'email'    => $result[0]->user_email,
+                    $sessionData = array(
+                        'userName' => $result[0]->userName,
+                        'email'    => $result[0]->email,
                     );
                     // Add user data in session
-                    $this->session->set_userdata('logged_in', $session_data);
+                    $this->session->set_userdata('userLoggedIn', $sessionData);
                     $this->load->view('admin_page');
                 }
             } else {
                 $data = array(
-                    'error_message' => 'Invalid Username or Password',
+                    'error_message' => 'Invalid username or password',
                 );
-                $this->load->view('login_form', $data);
+                $this->load->showView('login', $data);
             }
         }
 
@@ -86,18 +87,6 @@ class Login extends MY_Controller {
                 $this->load->view('registration_form', $data);
             }
         }
-    }
-
-// Logout from admin page
-    public function logout() {
-
-// Removing session data
-        $sess_array = array(
-            'username' => '',
-        );
-        $this->session->unset_userdata('logged_in', $sess_array);
-        $data['message_display'] = 'Successfully Logout';
-        $this->load->view('login_form', $data);
     }
 
 }

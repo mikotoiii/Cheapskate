@@ -2,6 +2,7 @@
 				<article id="work">
 								<header>
 												<h2>Login!</h2>
+            <?=validation_errors();?>
 								</header>
 								<div class="container 50%">
 												<section>
@@ -9,7 +10,7 @@
 																				<div>
 																								<div class="row">
 																												<div class="6u">
-																																<input type="text" name="name" id="userName" placeholder="username or email" />
+																																<input type="text" name="name" id="userName" placeholder="username or email" value="<?=set_value('userName');?>"/>
 																												</div>
 																													<div class="6u">
 																																<input type="text" name="name" id="password" placeholder="password" />

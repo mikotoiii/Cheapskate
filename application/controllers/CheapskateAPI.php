@@ -20,8 +20,8 @@ class CheapskateAPI extends MY_Controller {
     }
 
     public function findAllVenues() {
-        $this->load->model('Venue_model');
-        $venues = $this->Venue_model->findAllVenues();
+        $this->load->model('Venue');
+        $venues = $this->Venue->findAllVenues();
 
         self::printJson($venues);
     }
@@ -31,12 +31,12 @@ class CheapskateAPI extends MY_Controller {
             throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
         }
 
-        $this->load->model('User_model');
-        $this->load->model('Venue_model');
+        $this->load->model('User');
+        $this->load->model('Venue');
 
-        $user = $this->User_model->load($userId);
+        $user = $this->User->load($userId);
         $user = $user[0];
-        $venues = $this->Venue_model->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
+        $venues = $this->Venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
 
         self::printJson($venues);
     }
@@ -46,9 +46,9 @@ class CheapskateAPI extends MY_Controller {
             throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
         }
 
-        $this->load->model('Venue_model');
+        $this->load->model('Venue');
 
-        $venues = $this->Venue_model->findAllVenuesByProximity($lat, $long, $radius);
+        $venues = $this->Venue->findAllVenuesByProximity($lat, $long, $radius);
 
         self::printJson($venues);
     }
@@ -57,22 +57,22 @@ class CheapskateAPI extends MY_Controller {
         if (!is_numeric($num)) {
             throw new UnexpectedValueException("findTopOptimalEvents(): You must provide an integer.");
         }
-        $this->load->model('Event_model');
-        $events = $this->Event_model->getTopOptimalEvents($num);
+        $this->load->model('Event');
+        $events = $this->Event->getTopOptimalEvents($num);
 
         self::printJson($events);
     }
 
     public function testUserLocation() {
-        $this->load->model('Venue_model');
-        $this->load->model('User_model');
+        $this->load->model('Venue');
+        $this->load->model('User');
         $this->load->helper("location");
 
-        $me = $this->User_model->load(1);
+        $me = $this->User->load(1);
         $me = $me[0];
-        $peppers = $this->Venue_model->load(1);
+        $peppers = $this->Venue->load(1);
         $peppers = $peppers[0];
-        $capital = $this->Venue_model->load(7);
+        $capital = $this->Venue->load(7);
         $capital = $capital[0];
 
         $distanceToPeps = getDistance($me->lastLocationLat, $me->lastLocationLong, $peppers->latitude, $peppers->longitude);
@@ -87,9 +87,9 @@ class CheapskateAPI extends MY_Controller {
         if (!is_numeric($userId)) {
             throw new UnexpectedValueException("getUser(): You must provide an integer.");
         }
-        $this->load->model('User_model');
+        $this->load->model('User');
 
-        $user = $this->User_model->load(1);
+        $user = $this->User->load(1);
         $user = $user[0];
 
         self::printJson($user);

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_model extends baseModel {
+class User extends baseModel {
 
     public $id;
     public $userName;
