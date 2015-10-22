@@ -5,9 +5,13 @@ error_reporting(1);
 
 class CheapskateAPI extends MY_Controller {
 
-//				public function __construct()	{
-//					//			parent::__construct();
-//				}
+    public function __construct()	{
+        parent::__construct();
+        
+        // auth stuff here, if not in parent.
+        // may need special auth cases to allow
+        // guest services
+    }
 
     public function index() {
         //$this->load->view('welcome_message');
