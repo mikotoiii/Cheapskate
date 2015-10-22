@@ -2,6 +2,7 @@
 <!-- Nav -->
 <nav id="nav">
 				<ul class="container">
+								<li><a href="home">Deals</a></li>
 								<li><a href="login">Sign in</a></li>
 								<li><a href="signup">Register</a></li>
 								<li><a href="about">About</a></li>
