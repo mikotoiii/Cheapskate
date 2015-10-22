@@ -7,7 +7,7 @@ switch (ENVIRONMENT) {
 								break;
 				case 'development':
 				default: 
-								$active_group = 'development';
+								$active_group = 'default';
 								break;
 }
 
