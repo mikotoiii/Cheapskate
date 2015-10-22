@@ -9,7 +9,7 @@ class	CheapskateAPI	extends	MY_Controller	{
 //					//			parent::__construct();
 //				}
 
-				public	function	index()	{ 
+				public	function	index()	{
 								//$this->load->view('welcome_message');
 								$json	=	"welcome to my API!";
 								echo	$json;
