@@ -2,12 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 switch (ENVIRONMENT) {
-	case 'development':
-		$active_group = 'default';
-		break;
-	default: 
-		$active_group = 'prod';
-	break;
+				case 'production':
+								$active_group = 'prod';
+								break;
+				case 'development':
+				default: 
+								$active_group = 'development';
+								break;
 }
 
 $query_builder = TRUE;

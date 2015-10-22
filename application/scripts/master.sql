@@ -145,3 +145,13 @@ CREATE TABLE eventType (
     `name` varchar(255) NOT NULL,
     info text NULL
 ) ENGINE=INNODB;
+
+CREATE TABLE userSession (
+    sessionId varchar(40) default '0' NOT NULL,
+    ipAddress varchar(45) default '0' NOT NULL,
+    userAgent varchar(120) NOT NULL,
+    lastActivity int(10) unsigned default 0 NOT NULL,
+    userData text NOT NULL,
+    PRIMARY KEY (sessionId),
+    KEY `last_activity_ind` (`lastActivity`)
+) ENGINE=INNODB;
