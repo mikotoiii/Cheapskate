@@ -8,16 +8,12 @@ function statusChangeCallback(response) {
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
         // Logged into your app and Facebook.
+        console.log(response);
         testAPI();
     } else if (response.status === 'not_authorized') {
-        // The person is logged into Facebook, but not your app.
-        document.getElementById('status').innerHTML = 'Please log ' +
-                'into this app.';
+
     } else {
-        // The person is not logged into Facebook, so we're not sure if
-        // they are logged into this app or not.
-        document.getElementById('status').innerHTML = 'Please log ' +
-                'into Facebook.';
+
     }
 }
 
@@ -33,8 +29,7 @@ function checkLoginState() {
 window.fbAsyncInit = function () {
     FB.init({
         appId: '1478153112492014',
-        cookie: true, // enable cookies to allow the server to access 
-        // the session
+        cookie: true, // enable cookies to allow the server to access the session
         xfbml: true, // parse social plugins on this page
         version: 'v2.5' // use version 2.2
     });
@@ -75,7 +70,5 @@ function testAPI() {
     FB.api('/me', function (response) {
         console.log(response);
         console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-                'Thanks for logging in, ' + response.name + '!';
     });
 }
