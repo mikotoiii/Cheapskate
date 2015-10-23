@@ -55,6 +55,9 @@ CREATE TABLE deal (
     info text NULL,
     timeStart varchar(100),
     timeEnd varchar(100),
+    mustBuyDrink tinyint(1) default 0 NOT NULL,
+    minPurchase int(1) default 0 NOT NULL,
+    maxPurchase int(1) default 0 NOT NULL,
     INDEX event_ind (eventId),
     FOREIGN KEY (eventId) 
         REFERENCES event(id)

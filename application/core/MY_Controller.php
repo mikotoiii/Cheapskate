@@ -10,6 +10,7 @@ class MY_Controller extends CI_Controller {
 
     protected $javascripts = array();
     protected $css = array();
+    protected $pageTitle = "";
 
     public function __construct() {
         parent::__construct();
@@ -24,10 +25,11 @@ class MY_Controller extends CI_Controller {
         // add the JS to the data object
         $data['javascripts'] = $this->javascripts;
         $data['css'] = $this->css;
+        $data['pageTitle'] = $this->pageTitle;
 
         // call all the template pieces
-        $this->load->view('header');
-        $this->load->view('mainNav');
+        $this->load->view('header', $data);
+        $this->load->view('mainNav', $data);
         $this->load->view($view, $data);
         $this->load->view('footer', $data);
     }
@@ -37,7 +39,7 @@ class MY_Controller extends CI_Controller {
      * part of the path. Just add any path/filename and we'll do the rest!
      * @param string $js the path/filename without .js extension
      */
-    public function addJavascript($js) {
+    protected function addJavascript($js) {
         $this->javascripts[] = $js;
     }
 
@@ -45,8 +47,16 @@ class MY_Controller extends CI_Controller {
      * Add a CSS resource to the head
      * @param string $css the path/filename without the .css extension
      */
-    public function addCss($css) {
+    protected function addCss($css) {
         $this->css[] = $css;
+    }
+    
+    /**
+     * Set the page specific title
+     * @param string $title The page title
+     */
+    protected function setTitle($title) {
+        $this->pageTitle = $title;
     }
 
 }

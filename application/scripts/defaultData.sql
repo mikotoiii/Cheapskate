@@ -38,6 +38,7 @@ INSERT INTO frequencyType SET name='Monthly';
 INSERT INTO frequencyType SET name='Annually';
 INSERT INTO frequencyType SET name='Holiday';
 INSERT INTO frequencyType SET name='One-off';
+INSERT INTO frequencyType SET name='Range';
 
 INSERT INTO eventType SET name='Special';
 INSERT INTO eventType SET name='Annaversary';
@@ -60,6 +61,7 @@ INSERT INTO role SET role='Guest';
 
 INSERT INTO dealType SET name='Happy Hour', info='';
 INSERT INTO dealType SET name='BOGO', info='';
+INSERT INTO dealType SET name='Beat The Clock', info='';
 INSERT INTO dealType SET name='Power Hour', info='';
 INSERT INTO dealType SET name='With Purchase Special', info='';
 INSERT INTO dealType SET name='Appetizer Special', info='';

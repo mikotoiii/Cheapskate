@@ -118,7 +118,7 @@ class	Minify	{
 					* @param array $config Config array
 					*/
 				public	function	__construct($config	=	array())	{
-								$this->ci	=	get_instance();
+								$this->ci	=&	get_instance();
 								$this->ci->load->config('minify',	TRUE,	TRUE);
 
 								// user specified settings from config file

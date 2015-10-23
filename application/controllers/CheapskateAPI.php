@@ -11,6 +11,7 @@ class CheapskateAPI extends MY_Controller {
         // auth stuff here, if not in parent.
         // may need special auth cases to allow
         // guest services
+        $this->load->helper("json");
     }
 
     public function index() {
@@ -23,7 +24,7 @@ class CheapskateAPI extends MY_Controller {
         $this->load->model('Venue');
         $venues = $this->Venue->findAllVenues();
 
-        self::printJson($venues);
+        printJson($venues);
     }
 
     public function findVenuesInRadius($userId) {
@@ -38,7 +39,7 @@ class CheapskateAPI extends MY_Controller {
         $user = $user[0];
         $venues = $this->Venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
 
-        self::printJson($venues);
+        printJson($venues);
     }
 
     public function findVenuesWithLocation($radius, $lat, $long) {
@@ -50,7 +51,7 @@ class CheapskateAPI extends MY_Controller {
 
         $venues = $this->Venue->findAllVenuesByProximity($lat, $long, $radius);
 
-        self::printJson($venues);
+        printJson($venues);
     }
 
     public function findTopOptimalEvents($num = 6) {
@@ -60,7 +61,7 @@ class CheapskateAPI extends MY_Controller {
         $this->load->model('Event');
         $events = $this->Event->getTopOptimalEvents($num);
 
-        self::printJson($events);
+        printJson($events);
     }
 
     public function testUserLocation() {
@@ -79,7 +80,7 @@ class CheapskateAPI extends MY_Controller {
         $distanceToCap = getDistance($me->lastLocationLat, $me->lastLocationLong, $capital->latitude, $capital->longitude);
         //echo "To Peps: " . $distanceToPeps . ", To Capital: " . $distanceToCap;
 
-        self::printJson($capital);
+        printJson($capital);
     }
 
     /** User Stuff * */
@@ -92,7 +93,7 @@ class CheapskateAPI extends MY_Controller {
         $user = $this->User->load(1);
         $user = $user[0];
 
-        self::printJson($user);
+        printJson($user);
     }
 
     public function updateUser($userId) {
@@ -100,16 +101,4 @@ class CheapskateAPI extends MY_Controller {
             throw new AuthException("You're not logged in!");
         }
     }
-
-    /**
-     * Handle the output of the JSON.
-     * Note: Only public fields of an object will be parsed
-     * @param mixed $json An array or object
-     */
-    private static function printJson($json) {
-        header('Content-Type: application/json');
-        print_r(json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-        exit;
-    }
-
 }
