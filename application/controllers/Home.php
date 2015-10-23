@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends MY_Controller {
 
@@ -29,21 +28,28 @@ class Home extends MY_Controller {
         
         $this->load->model('User');
         $this->load->helper("location");
+        $this->load->helper("json");
 
         $me =  $this->User->load(1);
         $me =  $me[0];
         
-        $result = $this->googlemaps->call("place/nearbysearch/",
+        $result = $this->googlemaps->call("place/nearbysearch",
                 array(
                     "location" => $me->lastLocationLat . "," . $me->lastLocationLong,
-                    "radius" => 1000,
-                    "types" => "establishment",
-                    "name" => "Rockys"
+                    "radius"   => $me->defaultDistanceRange * 1000,
+                    "types"    => "bar|establishment|food",
+                    "name"     => "Rockys"
                 )
         );
-        header("Content-Type: application/json");
-        echo json_encode($result);
-        exit;
+                
+        $details = $this->googlemaps->call("place/details",
+                array(
+                    "placeid" => $result->results[0]->place_id
+                ));
+        
+        var_dump($details); die;
+        
+        printJson($details);
     }
 				
 }

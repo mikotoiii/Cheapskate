@@ -11,7 +11,7 @@ CREATE TABLE venue (
     province varchar(2) NOT NULL default 'NB',
     address1 varchar(100) NOT NULL,
     address2 varchar(100) NULL,
-    googleMapLocationId varchar(30) NULL,
+    googleMapsPlaceId varchar(30) NULL,
     latitude varchar(20) NULL,
     longitude varchar(20) NULL,
     phone varchar(12) NULL,
@@ -132,11 +132,8 @@ CREATE TABLE venueHours (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     venueId int(11) NOT NULL,
     day int(1) NOT NULL default 0,
-    startTime varchar(20) NULL,
-    endTime varchar(20) NULL,
-    startTimeSplit varchar(20) NULL,
-    endTimeSplit varchar(20) NULL,
-    closed tinyint(1) default 0,
+    openTime varchar(20) NULL,
+    closeTime varchar(20) NULL,
     INDEX venue_ind (venueId),
     FOREIGN KEY (venueId) 
         REFERENCES venue(id)

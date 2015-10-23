@@ -1,7 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
-error_reporting(1);
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CheapskateAPI extends MY_Controller {
 
@@ -70,11 +67,8 @@ class CheapskateAPI extends MY_Controller {
         $this->load->helper("location");
 
         $me = $this->User->load(1);
-        $me = $me[0];
         $peppers = $this->Venue->load(1);
-        $peppers = $peppers[0];
         $capital = $this->Venue->load(7);
-        $capital = $capital[0];
 
         $distanceToPeps = getDistance($me->lastLocationLat, $me->lastLocationLong, $peppers->latitude, $peppers->longitude);
         $distanceToCap = getDistance($me->lastLocationLat, $me->lastLocationLong, $capital->latitude, $capital->longitude);
@@ -91,7 +85,6 @@ class CheapskateAPI extends MY_Controller {
         $this->load->model('User');
 
         $user = $this->User->load(1);
-        $user = $user[0];
 
         printJson($user);
     }
