@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Represents and stores a Venue
@@ -59,7 +58,8 @@ class Venue extends baseModel {
      */
     public function getVenueByPlaceId($placeId) {
         $this->db->where("placeId", $placeId);
-        $query = $this->db->select("id", "venue");
+        $this->db->select("id");
+        $query = $this->db->get("venue");
         $result = $query->result();
         
         return $this->load($result->id);
@@ -68,6 +68,27 @@ class Venue extends baseModel {
 				public function findVenueByName($name) {
 								throw new BadMethodCallException("Method Not Yet Implemented. Please write it.");
 				}
+    
+    private function updateVenueHours($venue, $data) {
+        $periods = $data->result->opening_hours->periods;
+        
+        foreach ($periods as $period) {
+            $day       = $period->open->day;
+            $openTime  = $period->open->time;
+            $closeTime = $period->close->time;
+            
+            $this->db->where(array("venueId" => $venue->id, "day" => $day));
+            $this->db->update(array("openTime" => $openTime, "closeTime" => $closeTime));
+        }
+    }
+    
+    public function populateVenueFromGoogleData($placeId, $data) {
+        $id = $this->venue->existsByPlaceId($placeId);
+        if ($id !== false) {
+            $this->venue->load($id);
+            $this->venue->update($data);
+        }
+    }
 				
 				public function findClosestVenue($origin) {
 								throw new BadMethodCallException("Method Not Yet Implemented. Please write it.");
@@ -107,7 +128,7 @@ class Venue extends baseModel {
 								ORDER BY distance;";
 												
 								$results = $this->doQuery($q);
-								$venues = $this->load($results);
+								$venues  = $this->load($results);
         								
 								// Populate the distance from the user
 								foreach ($venues as $venue) {
@@ -129,7 +150,8 @@ class Venue extends baseModel {
      */
     public function existsByPlaceId($placeId) {
         $this->db->where("placeId", $placeId);
-        $query = $this->db->select("id", "venue");
+        $this->db->select("id");
+        $query = $this->db->get("venue");
         $result = $this->query->result();
         
         return count($result) === 1 ? $result[0]->id : false;

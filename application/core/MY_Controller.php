@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * The man controller. This will handle the template generation,
@@ -16,6 +14,13 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
     }
 
+    /**
+     * Display the view. This function wraps up all the teplates,
+     * sets the page title, adds all the requested Javascript and CSS, 
+     * and passes along any data.
+     * @param string $view The name of the content view to display
+     * @param array $data (Optional) ÏAn array of any data to pass along
+     */
     protected function showView($view, $data = null) {
 
         if ($data === null) {

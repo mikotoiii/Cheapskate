@@ -38,6 +38,43 @@ class CheapskateAPI extends MY_Controller {
 
         printJson($venues);
     }
+    
+    public function findVenuesByName($userId, $name) {
+        $this->load->library("googleMaps");
+        
+        $this->load->model('User');
+        $this->load->helper("location");
+        $this->load->helper("json");
+
+        //TODO: Trap for errors here
+        $me = $this->User->load($userId);
+        $me = $me[0];
+        
+        $result = $this->googlemaps->call("place/nearbysearch/",
+                array(
+                    "location" => $me->lastLocationLat . "," . $me->lastLocationLong,
+                    "radius"   => $me->defaultDistanceRadius * 1000, //km
+                    "types"    => "bar|establishment|food",
+                    "name"     => $name
+                )
+        );
+        
+        printJson($result);
+    }
+    
+    public function getVenueDetailsByPlaceId($placeId) {
+        $this->load->library("googleMaps");
+        $this->load->model('Venue');
+        $this->load->helper("json");
+        
+        $result = $this->googlemaps->call("place/details",
+                array(
+                    "place_id" => $placeId
+                )
+        );
+        
+        printJson($result);
+    }
 
     public function findVenuesWithLocation($radius, $lat, $long) {
         if (!is_numeric($radius) || !is_numeric($lat) || !is_numeric($long)) {
@@ -55,6 +92,7 @@ class CheapskateAPI extends MY_Controller {
         if (!is_numeric($num)) {
             throw new UnexpectedValueException("findTopOptimalEvents(): You must provide an integer.");
         }
+        
         $this->load->model('Event');
         $events = $this->Event->getTopOptimalEvents($num);
 
@@ -66,12 +104,12 @@ class CheapskateAPI extends MY_Controller {
         $this->load->model('User');
         $this->load->helper("location");
 
-        $me = $this->User->load(1);
+        $me      = $this->User->load(1);
         $peppers = $this->Venue->load(1);
         $capital = $this->Venue->load(7);
 
         $distanceToPeps = getDistance($me->lastLocationLat, $me->lastLocationLong, $peppers->latitude, $peppers->longitude);
-        $distanceToCap = getDistance($me->lastLocationLat, $me->lastLocationLong, $capital->latitude, $capital->longitude);
+        $distanceToCap  = getDistance($me->lastLocationLat, $me->lastLocationLong, $capital->latitude, $capital->longitude);
         //echo "To Peps: " . $distanceToPeps . ", To Capital: " . $distanceToCap;
 
         printJson($capital);
@@ -82,6 +120,7 @@ class CheapskateAPI extends MY_Controller {
         if (!is_numeric($userId)) {
             throw new UnexpectedValueException("getUser(): You must provide an integer.");
         }
+        
         $this->load->model('User');
 
         $user = $this->User->load(1);
@@ -89,9 +128,4 @@ class CheapskateAPI extends MY_Controller {
         printJson($user);
     }
 
-    public function updateUser($userId) {
-        if (!isset($_POST)) {
-            throw new AuthException("You're not logged in!");
-        }
-    }
 }

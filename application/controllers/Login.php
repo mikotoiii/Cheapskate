@@ -1,7 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-session_start();
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller {
 
@@ -12,7 +9,7 @@ class Login extends MY_Controller {
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('User');
-        
+
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
     }
 
@@ -25,10 +22,10 @@ class Login extends MY_Controller {
         if (!isset($_POST)) {
             throw new Exception("Gotta use post to login, baby girl!");
         }
-        
+
         if ($this->form_validation->run('login') === false) {
             if (isset($this->session->userdata['userLoggedIn'])) {
-            $this->showView("home");
+                $this->showView("home");
             } else {
                 $this->showView("login");
             }
@@ -37,17 +34,20 @@ class Login extends MY_Controller {
                 'userName' => $this->input->post('userName'),
                 'password' => $this->input->post('password'),
             );
-            
+
             $result = $this->login_database->login($data);
-            
-            if ($result == TRUE) {
+
+            if ($result === true) {
 
                 $username = $this->input->post('useNname');
-                $result   = $this->login_database->read_user_information($username);
-                if ($result != false) {
+                $user = $this->User->getUserByUserNameOrEmail($username);
+                $user = $user[0];
+                if ($result !== false) {
                     $sessionData = array(
-                        'userName' => $result[0]->userName,
-                        'email'    => $result[0]->email,
+                        'userName'  => $user->userName,
+                        'email'     => $user->email,
+                        'authToken' => '',
+                        'lastSeen'  => date("Y-m-d")
                     );
                     // Add user data in session
                     $this->session->set_userdata('userLoggedIn', $sessionData);
@@ -60,13 +60,12 @@ class Login extends MY_Controller {
                 $this->load->showView('login', $data);
             }
         }
-
     }
 
-// Validate and store registration data in database
+    // Validate and store registration data in database
     public function new_user_registration() {
 
-// Check validation for user input in SignUp form
+        // Check validation for user input in SignUp form
         $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
         $this->form_validation->set_rules('email_value', 'Email', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
@@ -74,8 +73,8 @@ class Login extends MY_Controller {
             $this->load->view('registration_form');
         } else {
             $data = array(
-                'user_name'     => $this->input->post('username'),
-                'user_email'    => $this->input->post('email_value'),
+                'user_name' => $this->input->post('username'),
+                'user_email' => $this->input->post('email_value'),
                 'user_password' => $this->input->post('password'),
             );
             $result = $this->login_database->registration_insert($data);

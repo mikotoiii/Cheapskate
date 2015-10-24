@@ -12,8 +12,8 @@ CREATE TABLE venue (
     address1 varchar(100) NOT NULL,
     address2 varchar(100) NULL,
     googleMapsPlaceId varchar(30) NULL,
-    latitude varchar(20) NULL,
-    longitude varchar(20) NULL,
+    latitude double(9, 6) NULL,
+    longitude double(9, 6) NULL,
     phone varchar(12) NULL,
     email varchar(100) NULL,
     website varchar(200) NULL,
@@ -102,11 +102,11 @@ CREATE TABLE `user` (
     email varchar(100) NOT NULL,
     twitter varchar(100) NULL,
     getNotifications tinyint(1) default 0,
-    lastLocationLat varchar(20) NULL,
-    lastLocationLong varchar(20) NULL,
+    lastLocationLat double(9, 6) NULL,
+    lastLocationLong double(9, 6) NULL,
     travelType varchar(7) NULL default 'walking',
     unitType varchar(2) NOT NULL default 'KM',
-    defaultDistanceRange int(5) NOT NULL default 10,
+    defaultDistanceRange float(7, 3) NOT NULL default 10,
     password varchar(255) NULL,
     authToken varchar(255) NULL,
     lastSeen timestamp NULL,
@@ -146,12 +146,10 @@ CREATE TABLE eventType (
     info text NULL
 ) ENGINE=INNODB;
 
-CREATE TABLE userSession (
-    sessionId varchar(40) default '0' NOT NULL,
-    ipAddress varchar(45) default '0' NOT NULL,
-    userAgent varchar(120) NOT NULL,
-    lastActivity int(10) unsigned default 0 NOT NULL,
-    userData text NOT NULL,
-    PRIMARY KEY (sessionId),
-    KEY `last_activity_ind` (`lastActivity`)
-) ENGINE=INNODB;
+CREATE TABLE usersession (
+    `id` varchar(40) NOT NULL,
+    `ip_address` varchar(45) NOT NULL,
+    `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
+    `data` blob NOT NULL,
+    KEY `ci_sessions_timestamp` (`timestamp`)
+); ENGINE=INNODB;

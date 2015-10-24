@@ -5,6 +5,10 @@
  */
 class GoogleMaps {
     
+    /**
+     * Make sure you load this by reference!!!
+     * @var CI The code igniter instance
+     */
     private $CI;
     
     public function __construct() {
@@ -13,11 +17,11 @@ class GoogleMaps {
     }
     
     public function searchVenueByName($name) {
-        
+        throw new BadMethodCallException("searchVenueByName() Not implemented yet.");
     }
     
     public function searchVenueByType($type) {
-        
+        throw new BadMethodCallException("searchVenueByType() Not implemented yet.");
     }
     
     /**
@@ -30,8 +34,8 @@ class GoogleMaps {
      * TODO: Need to add error handling of ALL types in here.
      */
     public function call($method, $params, $type = 'json') {
-        $url = $this->CI->config->item("GOOGLE_MAPS_BASE_URL", 'googleMaps') . $method .
-                "/" . $type . "?" .
+        $url = $this->CI->config->item("GOOGLE_MAPS_BASE_URL", 'googleMaps')
+                . $method . "/" . $type . "?" .
                 self::getParamString($params) . "&key=" .
                 $this->CI->config->item("GOOGLE_MAPS_API_KEY", 'googleMaps');
         $result = file_get_contents($url);
@@ -39,10 +43,17 @@ class GoogleMaps {
         return json_decode($result);
     }
     
+    /**
+     * Build a query string.
+     * We use this instead of using a builtin because it will mess up commas
+     * @param array $params An associative array of query params and values
+     * @return string Returns a formatted query string for the API call
+     */
     private static function getParamString($params) {
         $str = "";
         $count = 0;
         $size = count($params);
+        
         foreach ($params as $k => $v) {
             $str .= $k . "=" . $v;
           if ($count != $size - 1) {

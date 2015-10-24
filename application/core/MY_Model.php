@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Base Model.
@@ -11,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class baseModel extends CI_Model {
 
-    private $clazz = null;
+    protected $clazz = null;
 
     public function __construct($clazz) {
         $this->clazz = $clazz;
@@ -71,6 +69,10 @@ class baseModel extends CI_Model {
         return $items;
     }
     
+    /**
+     * Update the object with new data
+     * @param type $data
+     */
     public function update($data) {
         
         try {
@@ -105,22 +107,18 @@ class baseModel extends CI_Model {
     
     /**
      * Check to see if an item exists (by it's ID)
-     * @param mixed $id can be an integer ID, or an object with an id property
-     * @return boolean Returns true if the item exists
+     * @param string $key The field you want to search for
+     * @param mixed $value The value to search for
+     * @return boolean Returns the array of item id(s) or false if the item doesn't exist
      * @throws Exception Throws an exception if the object doesn't have an ID.
      */
-    public function exists($id) {
-        if (is_object($id)) {
-            if (property_exists("id")) {
-                $id = $id->id;
-            } else {
-                throw new Exception("Object doesn't have an ID. It might not have been initalized.");
-            }
-        }
+    public function exists($key, $value) {
         
+        $this->db->where($key, $value);
         $query = $this->db->select("id", strtolower($this->clazz));
+        $result = $query->result();
         
-        return count($query->result()) === 1;
+        return !empty($result) ? $result : false;
     }
 
     /**
@@ -136,6 +134,4 @@ class baseModel extends CI_Model {
 
 }
 
-class My_Model {}
-
-// CI needs this
+class My_Model {} // CI needs this

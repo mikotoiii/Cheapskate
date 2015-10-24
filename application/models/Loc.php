@@ -6,8 +6,8 @@ class Loc extends CI_Model {
     
     /**
      * Create a location object
-     * @param long $latitude
-     * @param long $longitude
+     * @param float $latitude
+     * @param float $longitude
      */
     public function __construct($latitude, $longitude) {
         $this->lat = $latitude;
@@ -16,8 +16,8 @@ class Loc extends CI_Model {
     
     /**
      * Latitude
-     * @param long $latitude The Latitude to set
-     * @return long The Latitude of the location
+     * @param float $latitude The Latitude to set
+     * @return float The Latitude of the location
      */
     public function lat($latitude = null) {
         if ($latitude !== null) {
@@ -29,8 +29,8 @@ class Loc extends CI_Model {
     
     /**
      * Longitude
-     * @param long $longitude The Longitude to set
-     * @return long The Longitude of the location
+     * @param float $longitude The Longitude to set
+     * @return float The Longitude of the location
      */
     public function lng($longitude = null) {
         if ($longitude !== null) {
