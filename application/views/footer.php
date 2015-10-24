@@ -32,16 +32,16 @@
     </article>
 </div>
 <!-- Scripts -->
-<script src="assets/js/vendor/jquery-1.9.1.min.js"></script>
-<script src="assets/js/vendor/skel.min.js"></script>
-<script src="assets/js/vendor/skel-viewport.min.js"></script>
-<script src="assets/js/util.js"></script>
+<script src="<?=base_url();?>assets/js/vendor/jquery-1.9.1.min.js"></script>
+<script src="<?=base_url();?>assets/js/vendor/skel.min.js"></script>
+<script src="<?=base_url();?>assets/js/vendor/skel-viewport.min.js"></script>
+<script src="<?=base_url();?>assets/js/util.js"></script>
 
 <?
 foreach ($javascripts as $js) {
     $external = (stripos($js, '//') !== false);
     ?>
-    <script type="text/javascript" src="<?= ($external ? '' : 'assets/js/') . $js . ($external ? '' : '.js'); ?>"></script>
+    <script type="text/javascript" src="<?= ($external ? '' : base_url() . 'assets/js/') . $js . ($external ? '' : '.js'); ?>"></script>
 <? } ?>
 </body>
 </html>
