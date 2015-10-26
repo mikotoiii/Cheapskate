@@ -2,6 +2,8 @@
 
 class Login extends MY_Controller {
     
+    private $activeUser = null;
+    
     public function __construct() {
         parent::__construct();
         
@@ -35,12 +37,12 @@ class Login extends MY_Controller {
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required|trim|min_length[3]|max_length[50]'
+                'rules' => 'required|trim|min_length[3]|max_length[50]|callback_validateUserNameExists'
             ),
             array(
                 'field' => 'password',
                 'label' => 'Password',
-                'rules' => 'required|trim|alpha_numeric|min_length[3]|max_length[50]'
+                'rules' => 'required|trim|alpha_numeric|min_length[3]|max_length[50]|callback_verifyPassword'
             )
         );
         
@@ -49,28 +51,11 @@ class Login extends MY_Controller {
             $this->showView("login");
             return;
         } else {
-            $data = array();
-            if (filter_var($this->input->post('username'), FILTER_VALIDATE_EMAIL) === false) {
-                $data['username'] = $this->input->post('username');
-            } else {
-                $data['email'] = $this->input->post('username');
-            }
             
-            $passwordChallenge = $this->input->post('password');
-            $userName = $this->input->post('username');
-            $passwordHash = $this->User->getUserPassword($data);
-            
-            if (!password_verify($passwordChallenge, $passwordHash)) {
-                $_SESSION["loginAttempts"] = $_SESSION["loginAttempts"]++;
-                $this->showView("login");
-                return;
-            }
-            
-            $user = $this->User->getUserFromLogin($data);
 
-            if ($user !== false) {
+            if ($this->activeUser !== false) {
                 $sessionData = array(
-                    'userName'  => $user->userName,
+                    'userName'  => $this->activeUser->userName,
                     'email'     => $user->email,
                     'authToken' => $user->authToken,
                     'lastSeen'  => date("Y-m-d")
@@ -87,6 +72,53 @@ class Login extends MY_Controller {
                 redirect("login");
             }
         }
+    }
+    
+    /**
+     * Validation Callback to verify the password
+     * @return boolean
+     */
+    private function verifyPassword() {
+        if (filter_var($this->input->post('username'), FILTER_VALIDATE_EMAIL) === false) {
+            $data['username'] = $this->input->post('username');
+        } else {
+            $data['email'] = $this->input->post('username');
+        }
+            
+        $passwordChallenge = $this->input->post('password');
+        $passwordHash = $this->User->getUserPassword($data);
+
+        if (!password_verify($passwordChallenge, $passwordHash)) {
+            $_SESSION["loginAttempts"] = $_SESSION["loginAttempts"]++;
+            
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Validation Callback to verify user
+     * Also sets the $activeUser
+     * @param string $userName The username as coming from POST
+     * @return boolean Returns true if the user exists
+     */
+    private function validateUserNameExists($userName) {
+        $data = array();
+        if (filter_var($this->input->post('username'), FILTER_VALIDATE_EMAIL) === false) {
+            $data['username'] = $this->input->post('username');
+        } else {
+            $data['email'] = $this->input->post('username');
+        }
+
+        $user = $this->User->getUserFromLogin($data);
+        
+        if ($user !== false) {
+            $this->activeUser = $user;
+            return true;
+        }
+        
+        return false;
     }
 
 }

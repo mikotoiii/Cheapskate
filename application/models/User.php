@@ -68,6 +68,12 @@ class User extends baseModel {
         return $this->User->load($result[0]->id);
     }
     
+    /**
+     * Get a user based on data passed in from the login
+     * This can be any fields you want to use to uniquely id a user
+     * @param array $data An array of fieldname => value items to use in the WHERE
+     * @return array Returns the e
+     */
     public function getUserFromLogin($data) {
         $this->db->where($data);
         $query = $this->db->get("User");
