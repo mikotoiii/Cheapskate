@@ -372,11 +372,13 @@ $config['encryption_key'] = 'gggggy65#SSa78908jnqp5@2210jbexA';
 $config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'cheapskate';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = 'userSession';
-$config['sess_table_name'] = 'userSession';
+$config['sess_save_path'] = 'usersession';
+$config['sess_table_name'] = 'usersession';
 $config['sess_match_ip'] = true;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = false;
+
+$config['max_login_attempts'] = 5;
 
 /*
 |--------------------------------------------------------------------------
@@ -393,7 +395,7 @@ $config['sess_regenerate_destroy'] = false;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
+$config['cookie_prefix']	= 'cheapskate';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
@@ -481,7 +483,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+$config['time_reference'] = 'America/Halifax';
 
 /*
 |--------------------------------------------------------------------------

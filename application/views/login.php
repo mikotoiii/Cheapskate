@@ -2,18 +2,18 @@
 				<article id="work">
 								<header>
 												<h2>Login!</h2>
-            <?=validation_errors();?>
+            <?= validation_errors(); ?>
 								</header>
 								<div class="container 50%">
 												<section>
-																<form method="post" action="login/submit">
+																<form method="post" action="/login">
 																				<div>
 																								<div class="row">
 																												<div class="6u">
-																																<input type="text" name="name" id="userName" placeholder="username or email" value="<?=set_value('userName');?>"/>
+																																<input type="text" name="username" id="username" placeholder="username or email" value="<?= set_value('username'); ?>"/>
 																												</div>
-																													<div class="6u">
-																																<input type="text" name="name" id="password" placeholder="password" />
+                            <div class="6u">
+																																<input type="password" name="password" id="password" placeholder="password" />
 																												</div>
 																								</div>
 																								<div class="row">

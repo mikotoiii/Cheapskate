@@ -8,6 +8,10 @@ class Signup extends MY_Controller {
 				
 				public function index() {
 								$this->addJavascript("vendor/facebookLogin");
+        $this->addJavascript("vendor/jquery.ui.min");
+        $this->addCss("../js/vendor/jquery-ui.min");
+        $this->addCss("../js/vendor/jquery.ui.structure.min");
+        $this->addCss("../js/vendor/jquery.ui.theme.min");
         $this->setTitle("Sign up!");
 								$this->showView('signup');
 				}

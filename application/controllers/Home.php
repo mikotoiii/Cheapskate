@@ -1,6 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends MY_Controller {
+    
+    public function __construct() {
+        parent::__construct();
+    }
 
 				public function index() {
 								$this->addJavascript("main");
@@ -24,32 +28,35 @@ class Home extends MY_Controller {
     }
     
     public function test() {
-        $this->load->library("googleMaps");
+//        $this->load->library("googleMaps");
+//        
+//        $this->load->model('User');
+//        $this->load->helper("location");
+//        $this->load->helper("json");
+//
+//        $me =  $this->User->load(1);
+//        $me =  $me[0];
+//        
+//        $result = $this->googlemaps->call("place/nearbysearch",
+//                array(
+//                    "location" => $me->lastLocationLat . "," . $me->lastLocationLong,
+//                    "radius"   => $me->defaultDistanceRange * 1000,
+//                    "types"    => "bar|establishment|food",
+//                    "name"     => "Rockys"
+//                )
+//        );
+//                
+//        $details = $this->googlemaps->call("place/details",
+//                array(
+//                    "placeid" => $result->results[0]->place_id
+//                ));
+//        
+//        var_dump($details); die;
+//        
+//        printJson($details);
         
-        $this->load->model('User');
-        $this->load->helper("location");
-        $this->load->helper("json");
-
-        $me =  $this->User->load(1);
-        $me =  $me[0];
-        
-        $result = $this->googlemaps->call("place/nearbysearch",
-                array(
-                    "location" => $me->lastLocationLat . "," . $me->lastLocationLong,
-                    "radius"   => $me->defaultDistanceRange * 1000,
-                    "types"    => "bar|establishment|food",
-                    "name"     => "Rockys"
-                )
-        );
-                
-        $details = $this->googlemaps->call("place/details",
-                array(
-                    "placeid" => $result->results[0]->place_id
-                ));
-        
-        var_dump($details); die;
-        
-        printJson($details);
+        print_r(password_hash("gloves", PASSWORD_DEFAULT));
+        var_export(password_verify("gloves", password_hash("gloves", PASSWORD_DEFAULT)));
     }
 				
 }

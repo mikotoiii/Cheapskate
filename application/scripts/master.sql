@@ -107,10 +107,10 @@ CREATE TABLE `user` (
     travelType varchar(7) NULL default 'walking',
     unitType varchar(2) NOT NULL default 'KM',
     defaultDistanceRange float(7, 3) NOT NULL default 10,
-    password varchar(255) NULL,
+    password varchar(255) NOT NULL,
     authToken varchar(255) NULL,
     lastSeen timestamp NULL,
-    userRoleId int(11) NULL
+    userRoleId int(11) NOT NULL default 2
 ) ENGINE=INNODB;
 
 CREATE TABLE `role` (
@@ -152,4 +152,4 @@ CREATE TABLE usersession (
     `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
     `data` blob NOT NULL,
     KEY `ci_sessions_timestamp` (`timestamp`)
-); ENGINE=INNODB;
+) ENGINE=INNODB;

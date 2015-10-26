@@ -3,7 +3,7 @@
 $config = array(
     "login" => array(
         array(
-            'field' => 'userName',
+            'field' => 'username',
             'label' => 'Username',
             'rules' => 'required|trim|alpha_numeric|xss_clean|min_length[3]|max_length[50]'
         ),
@@ -15,7 +15,7 @@ $config = array(
     ),
     "signup" => array(
         array(
-            'field' => 'userName',
+            'field' => 'username',
             'label' => 'Username',
             'rules' => 'required|trim|alpha_dash|xss_clean|min_length[3]|max_length[50]'
         ),

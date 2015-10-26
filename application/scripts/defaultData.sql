@@ -47,6 +47,7 @@ INSERT INTO eventType SET name='Open Mic';
 INSERT INTO eventType SET name='Promotion';
 
 INSERT INTO role SET role='Admin';
+INSERT INTO role SET role='User';
 INSERT INTO role SET role='Moderator Lead';
 INSERT INTO role SET role='Moderator';
 INSERT INTO role SET role='Moderator Jr';
@@ -56,7 +57,6 @@ INSERT INTO role SET role='Venue Contributor';
 INSERT INTO role SET role='Promoter';
 INSERT INTO role SET role='Liquor Rep';
 INSERT INTO role SET role='Advertiser';
-INSERT INTO role SET role='User';
 INSERT INTO role SET role='Guest';
 
 INSERT INTO dealType SET name='Happy Hour', info='';
@@ -77,5 +77,5 @@ INSERT INTO venueType SET name='Nightclub';
 INSERT INTO venueType SET name='Arena';
 INSERT INTO venueType SET name='Outdoors';
 
-INSERT INTO user SET userName='boyer', password='gloves', lastLocationLat=45.271111, lastLocationLong=-66.059719, nameFirst='Sean', nameLast='Boyer', email='seanboyer.sj@gmail.com', userRoleId=1, dob='1985-01-10';
+INSERT INTO user SET userName='boyer', password='$2y$10$r9uLRgY4MAgfoEEGzRRjGu2YFLF71d5Ob4mYNdfKqHIj5GC4GgKVC', authToken='blood', lastLocationLat=45.271111, lastLocationLong=-66.059719, nameFirst='Sean', nameLast='Boyer', email='seanboyer.sj@gmail.com', userRoleId=1, dob='1985-01-10';
 INSERT INTO userRole SET userId=1, roleId=1;

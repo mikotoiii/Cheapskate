@@ -22,15 +22,7 @@ class baseModel extends CI_Model {
      */
     public function load($id) {
 
-        try {
-            $reflector = new ReflectionClass($this->clazz);
-            $table = strtolower($reflector->getShortName());
-        } catch (Exception $e) {
-            error_log($e);
-            die;
-        }
-
-        $properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
+        $properties = getThisProperties();
         if (is_numeric($id)) {
             $this->db->where('id', $id);
         } else if (is_array($id) && count($id) > 0) {
@@ -130,6 +122,24 @@ class baseModel extends CI_Model {
     protected function doQuery($q) {
         $query = $this->db->query($q);
         return $query->result();
+    }
+    
+    /**
+     * Returns an object with all the PUBLIC properties for this (child instance) class
+     * @return array An array of objects containing the properties 
+     */
+    protected function getThisProperties() {
+        try {
+            $reflector = new ReflectionClass($this->clazz);
+            $table = strtolower($reflector->getShortName());
+        } catch (Exception $e) {
+            error_log($e);
+            die;
+        }
+
+        $properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
+        
+        return $properties;
     }
 
 }

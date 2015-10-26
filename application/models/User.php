@@ -67,5 +67,43 @@ class User extends baseModel {
         
         return $this->User->load($result[0]->id);
     }
+    
+    public function getUserFromLogin($data) {
+        $this->db->where($data);
+        $query = $this->db->get("User");
+        $result = $query->result();
+        
+        return empty($result) ? false : $result[0];
+        
+    }
+    
+    public function getUserPassword($data) {
+        $this->db->where($data);
+        $this->db->select("password");
+        $query = $this->db->get("user");
+        $result = $query->result();
+        
+        return empty($result) ? false : $result[0]->password;
+    }
+    
+    public function addNewUser($data) {
+        
+        // Override and set some data before entering it into the DB
+        $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['password'] = $passwordHash;
+        
+        $properties = $this->getThisProperties();
+        foreach ($properties as $property) {
+            try {
+                if (isset($data[$property->name])) {
+                    $this->{$property->name} = $data->{$property->name};
+                }
+            } catch (Exception $e) {
+                //throw Exception("Property " . $ . $e->getMessage())
+                error_log($e);
+                //die;
+            }
+        }
+    }
 
 }

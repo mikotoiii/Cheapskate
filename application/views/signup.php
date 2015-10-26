@@ -7,27 +7,44 @@
 												<section>
 																<form method="post" action="signup/submit">
 																				<div>
+                        <div class="row">
+                            <div class="12u">
+                                <input type="text" name="userName" id="userName" placeholder="username" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            	<div class="12u">
+																																<input type="text" name="email" id="email" placeholder="email" />
+																												</div>
+                        </div>
 																								<div class="row">
 																												<div class="6u 12u(mobile)">
-																																<input type="text" name="name" id="name" placeholder="Name" />
+																																<input type="text" name="nameFirst" id="nameFirst" placeholder="first name" />
 																												</div>
-																												<div class="6u 12u(mobile)">
-																																<input type="text" name="email" id="email" placeholder="Email" />
+																											<div class="6u 12u(mobile)">
+																																<input type="text" name="nameLast" id="nameLast" placeholder="last name" />
 																												</div>
 																								</div>
 																								<div class="row">
 																												<div class="6u 12u(mobile)">
-																																<input type="text" name="password1" id="subject" placeholder="password" />
+																																<input type="password" name="password1" id="subject" placeholder="password" />
 																												</div>
 																												<div class="6u 12u(mobile)">
-																																<input type="text" name="password2" id="subject" placeholder="confirm password" />
+																																<input type="password" name="password2" id="subject" placeholder="confirm password" />
 																												</div>
 																								</div>
+                        <div class="row">
+                            <div class="6u">
+																																<input type="text" name="dob" id="dob" placeholder="birth date" />
+																												</div>
+                            <div class="6u">
+                                <label for="dob">(...helps us show you birthday-specific deals!)</label>
+                            </div>
+                        </div>
 																								<div class="row">
 																												<div class="12u">
 																																<ul class="actions">
 																																				<li><input type="submit" value="Sign up!" /></li>
-																																				<li><input type="reset" value="Clear Form" class="alt" /></li>
 																																</ul>
 																												</div>
 																								</div>

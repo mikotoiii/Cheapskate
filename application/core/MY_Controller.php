@@ -9,10 +9,11 @@ class MY_Controller extends CI_Controller {
     protected $javascripts = array();
     protected $css = array();
     protected $pageTitle = "";
+    protected $loginRequired  = false;
+    protected $adminRequired  = false;
 
     public function __construct() {
         parent::__construct();
-        $this->load->helper("url");
     }
 
     /**
@@ -20,10 +21,14 @@ class MY_Controller extends CI_Controller {
      * sets the page title, adds all the requested Javascript and CSS, 
      * and passes along any data.
      * @param string $view The name of the content view to display
-     * @param array $data (Optional) ÏAn array of any data to pass along
+     * @param array $data (Optional) An array of any data to pass along
      */
     protected function showView($view, $data = null) {
-
+        
+        if ($this->loginRequired && !$this->session->userdata("userLoggedIn")) {
+            $this->session->authErrorMsg = "You must be logged in. Please login first.";
+        }
+                
         if ($data === null) {
             $data = array();
         }
@@ -36,8 +41,16 @@ class MY_Controller extends CI_Controller {
         // call all the template pieces
         $this->load->view('header', $data);
         $this->load->view('mainNav', $data);
-        $this->load->view($view, $data);
+        
+        if (strlen($this->session->authErrorMsg) > 0) {
+            $data["authErrorMsg"] = $this->session->authErrorMsg;
+            $this->load->view('showErrors', $data);
+        } else {
+            $this->load->view($view, $data);
+        }
+        
         $this->load->view('footer', $data);
+        
     }
 
     /**
@@ -63,6 +76,19 @@ class MY_Controller extends CI_Controller {
      */
     protected function setTitle($title) {
         $this->pageTitle = $title;
+    }
+    
+    /**
+     * Is the current user logged in?
+     * @param boolean $loggedIn Whether or not the user is logged in
+     * @return type
+     */
+    protected function loggedIn($loggedIn = null) {
+        if ($loggedIn !== null) {
+            $_SESSION["userLoggedIn"] = $loggedIn;
+        }
+        
+        return $_SESSION["userLoggedIn"];
     }
 
 }

@@ -3,7 +3,7 @@
 <nav id="nav">
 				<ul class="container">
 								<li><a href="home">Deals</a></li>
-								<? if (!@$userLoggedIn) { ?>
+								<? if (!$this->session->userdata("userLoggedIn")) { ?>
 								<li><a href="login">Sign in</a></li>
 								<li><a href="signup">Register</a></li>
 								<? } else { ?>
