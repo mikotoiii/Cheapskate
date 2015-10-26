@@ -51,13 +51,11 @@ class Login extends MY_Controller {
             $this->showView("login");
             return;
         } else {
-            
-
             if ($this->activeUser !== false) {
                 $sessionData = array(
                     'userName'  => $this->activeUser->userName,
-                    'email'     => $user->email,
-                    'authToken' => $user->authToken,
+                    'email'     => $this->activeUser->email,
+                    'authToken' => $this->activeUser->authToken,
                     'lastSeen'  => date("Y-m-d")
                 );
                 // Add user data to session
@@ -78,7 +76,10 @@ class Login extends MY_Controller {
      * Validation Callback to verify the password
      * @return boolean
      */
-    private function verifyPassword() {
+    public function verifyPassword() {
+        
+        $this->form_validation->set_message('verifyPassword', "The username or password are incorrect.");
+        
         if (filter_var($this->input->post('username'), FILTER_VALIDATE_EMAIL) === false) {
             $data['username'] = $this->input->post('username');
         } else {
@@ -103,7 +104,9 @@ class Login extends MY_Controller {
      * @param string $userName The username as coming from POST
      * @return boolean Returns true if the user exists
      */
-    private function validateUserNameExists($userName) {
+    public function validateUserNameExists($userName) {
+        
+        $this->form_validation->set_message('validateUserNameExists', "The {field} doesn't exist");
         $data = array();
         if (filter_var($this->input->post('username'), FILTER_VALIDATE_EMAIL) === false) {
             $data['username'] = $this->input->post('username');
