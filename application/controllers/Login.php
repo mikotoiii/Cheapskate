@@ -13,7 +13,7 @@ class Login extends MY_Controller {
         $this->load->library('form_validation');
         $this->load->model('User');
 
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+        $this->form_validation->set_error_delimiters('<div class="alert-item">', '</div>');
         
         if (!isset($_SESSION["logginAttempts"])) {
             $_SESSION["loginAttempts"] = 0;

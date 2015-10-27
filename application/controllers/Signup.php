@@ -13,20 +13,21 @@ class Signup extends MY_Controller {
         $this->addCss("../js/vendor/jquery.ui.structure.min");
         $this->addCss("../js/vendor/jquery.ui.theme.min");
         $this->setTitle("Sign up!");
-								$this->showView('signup');
+        
+        if (empty($_POST)) {
+           $this->showView('signup');
+           return;
+        }
+        
+        $this->doSubmit();
 				}
 				
-				public function submit() {
-								//$this->showView('signup');
-				}
     
     // Validate and store registration data in database
-    public function new_user_registration() {
+    private function doSubmit() {
 
         // Check validation for user input in SignUp form
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('email_value', 'Email', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('registration_form');
         } else {

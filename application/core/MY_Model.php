@@ -10,37 +10,50 @@
 class baseModel extends CI_Model {
 
     protected $clazz = null;
+    protected $reflector = null;
+    protected $table = null;
 
     public function __construct($clazz) {
         $this->clazz = $clazz;
+        
+        try {
+            $this->reflector = new ReflectionClass($this->clazz);
+            $this->table = strtolower($this->reflector->getShortName());
+        } catch (Exception $e) {
+            error_log($e);
+        }
     }
 
     /**
      * Magic load a table
-     * @param type mixed $id Can be an single int $id, or an array of objects with an id property
+     * @param mixed $id Can be an single int $id, an array of IDs, or an array of objects with an id property
      * @return mixed Returns an array of results if there are > 1, or just the object if there is one.
      */
     public function load($id) {
 
-        $properties = getThisProperties();
+        $properties = $this->getThisProperties();
         if (is_numeric($id)) {
             $this->db->where('id', $id);
         } else if (is_array($id) && count($id) > 0) {
             $ids = array();
             foreach ($id as $i) {
-                array_push($ids, $i->id);
+                if (is_object($i)) {
+                    array_push($ids, $i->id);
+                } else if (is_numeric((int)$i)) {
+                    array_push($ids, $i);
+                }
             }
-            
+            print_r("Table: " . $this->table . "  --  IDs: " . var_dump($ids));
             $this->db->where_in('id', $ids);
         }
         
-        $query = $this->db->get($table);
+        $query = $this->db->get($this->table);
         $results = $query->result();
         
         $items = array();
         foreach ($results as $result) {
             foreach ($properties as $property) {
-                if (strtolower($property->class) !== $table) {
+                if (strtolower($property->class) !== $this->table) {
                     continue;
                 }
 
@@ -49,9 +62,7 @@ class baseModel extends CI_Model {
                         $this->{$property->name} = $result->{$property->name};
                     }
                 } catch (Exception $e) {
-                    //throw Exception("Property " . $ . $e->getMessage())
                     error_log($e);
-                    //die;
                 }
             }
 
@@ -66,31 +77,29 @@ class baseModel extends CI_Model {
      * @param type $data
      */
     public function update($data) {
+        $model = ucfirst($this->table);
         
-        try {
-            $reflector = new ReflectionClass($this->clazz);
-            $table = strtolower($reflector->getShortName());
-        } catch (Exception $e) {
-            error_log($e);
-        }
+        $this->load->model($model);
+        $item = $this->{$model}->load($data->id);
         
-        $properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
+        $properties = $this->reflector->getProperties(ReflectionProperty::IS_PUBLIC);
         
         foreach ($properties as $property) {
-            if (strtolower($property->class) !== $table) {
+            if (strtolower($property->class) !== $this->table) {
                 continue;
             }
-
-            try {
-                if (isset($data[$property->name])) {
-                    $this->{$property->name} = $result->{$property->name};
+            
+            if ($item->{$property->name} != $data->{$property->name}) {
+                try {
+                    if (isset($data[$property->name])) {
+                        $item->{$property->name} = $data->{$property->name};
+                    }
+                } catch (Exception $e) {
+                    error_log($e);
                 }
-            } catch (Exception $e) {
-                //throw Exception("Property " . $ . $e->getMessage())
-                error_log($e);
-                //die;
-            }
+            } 
         }
+        
     }
     
     public function create($data) {
@@ -129,15 +138,7 @@ class baseModel extends CI_Model {
      * @return array An array of objects containing the properties 
      */
     protected function getThisProperties() {
-        try {
-            $reflector = new ReflectionClass($this->clazz);
-            $table = strtolower($reflector->getShortName());
-        } catch (Exception $e) {
-            error_log($e);
-            die;
-        }
-
-        $properties = $reflector->getProperties(ReflectionProperty::IS_PUBLIC);
+        $properties = $this->reflector->getProperties(ReflectionProperty::IS_PUBLIC);
         
         return $properties;
     }

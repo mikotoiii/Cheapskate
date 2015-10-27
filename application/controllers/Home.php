@@ -55,8 +55,6 @@ class Home extends MY_Controller {
 //        
 //        printJson($details);
         
-        print_r(password_hash("gloves", PASSWORD_DEFAULT));
-        var_export(password_verify("gloves", password_hash("gloves", PASSWORD_DEFAULT)));
     }
 				
 }

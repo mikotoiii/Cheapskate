@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set("America/Halifax");
 /**
  * Represents and stores a Venue
  */
@@ -40,6 +40,18 @@ class Venue extends baseModel {
     public function __construct() {
 								parent::__construct(get_class()); // Needs to be here
         $this->load->database();
+    }
+    
+    /**
+     * OVERRIDE
+     * @param type $id
+     */
+    public function load($id) {
+        $venues = parent::load($id);
+        
+        foreach ($venues as &$venue) {
+            // load events
+        }
     }
 				
     /**
@@ -110,26 +122,38 @@ class Venue extends baseModel {
 				 * @param type $distance
 				 * @param type $unit
 				 * @return array Returns the venues near the user
+     * 
+     *  AND ((CAST('14:11:12' as time) BETWEEN timeStart AND timeEnd))
 				 */
-				public function findAllVenuesByProximity($lat, $long, $distance, $unit = 'KM') {
+				public function findAllVenuesByProximity($lat, $long, $distance, $day, $unit = 'KM') {
 								$earthRadius = $unit == 'KM' ? 6371 : 3958;
+        $end = time() + (24 * 3600); // 24 hours in the future
+        //$day = date("N", $end);
+        $endHour = date("H:i:s", $end);
+        
 								$q ="SELECT
-								id, (
+								v.id, (
 										{$earthRadius} * acos (
-												cos ( radians({$lat}) )
-												* cos( radians( latitude ) )
-												* cos( radians( longitude ) - radians({$long}) )
-												+ sin ( radians({$lat}) )
-												* sin( radians( latitude ) )
+												  cos(radians({$lat}))
+												* cos(radians(latitude))
+												* cos(radians(longitude) - radians({$long}))
+												+ sin(radians({$lat}))
+												* sin(radians(latitude))
 										)
 								) AS distance
-								FROM venue
+								FROM venue as v
+        WHERE v.id IN (SELECT DISTINCT venueId FROM event WHERE timeDay={$day})
 								HAVING distance < {$distance}
 								ORDER BY distance;";
-												
+        
 								$results = $this->doQuery($q);
-								$venues  = $this->load($results);
-        								
+
+        if (empty($results)) {
+            return $results;
+        }
+        
+								$venues = $this->load($results);
+        
 								// Populate the distance from the user
 								foreach ($venues as $venue) {
 												foreach ($results as $result) {
@@ -139,7 +163,7 @@ class Venue extends baseModel {
 																}
 												}
 								}
-								
+        
 								return $venues;
 				}
     
@@ -158,10 +182,10 @@ class Venue extends baseModel {
     }
 				
 				public function venueHasDeals($venueId) {
-								
+								throw new BadMethodCallException("Not implemented yet.");
 				}
 				
-				public function findVenuesWithDeals($loc) {
+				public function findVenuesWithDeals($lat, $lng) {
 								
 				}
 				

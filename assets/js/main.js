@@ -20,6 +20,7 @@ var weekdays = [];
 $(function () {
     getUserLocation(function() {});
     curDay  = new Date().getDay();
+    console.log(curDay);
     $("#dayTitle").text(getDayName(curDay));
     
     // load venues
@@ -82,7 +83,6 @@ function populateDays() {
 
         $(ele).data("day", day);
         $(ele).append(dayMarkupFactory(), null);
-        $("#dayTitle").text(getDayName(day));
         
         populateDeals(day);
     });
@@ -107,6 +107,7 @@ function populateDeals(day) {
         li.append("<div class='venue venueTextLink' data-id='" + deal.venueId + "'>" + venue.name + "</div>");
         li.append("<div class='category'>" + deal.category + " | " + deal.type) + "</div>";
         li.append("<div class='time'><i class='fa fa-clock-o'></i> " + deal.timeStart + " - " + deal.timeEnd + "</div>");
+        li.append("<div class='timeTil'></div>");
         li.append("<div class='info'>" + deal.info + "</div>");
 
         ul.append(li);

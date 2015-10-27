@@ -10,7 +10,7 @@ class Deal extends baseModel {
     public $eventId;
     public $dealTypeId;
     public $info;
-    public $timeStart ;
+    public $timeStart;
     public $timeEnd;
 				
     public function __construct() {

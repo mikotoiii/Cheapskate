@@ -32,11 +32,13 @@ CREATE TABLE venue (
 
 CREATE TABLE event (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    dealId int(11) NULL,
     eventTypeId int(11) NOT NULL,
     venueId int(11) NOT NULL,
     `name` varchar(255) NOT NULL,
     info text NULL,
+    timeDay int(1) NOT NULL,
+    timeStart time NULL,
+    timeEnd time NULL,
     submittedById int(11) NOT NULL,
     coverCost varchar(10) NULL,
     coverTypeId int(11) NOT NULL,
@@ -44,25 +46,39 @@ CREATE TABLE event (
     FOREIGN KEY (venueId) 
         REFERENCES venue(id)
         ON DELETE CASCADE
-    
 ) ENGINE=INNODB;
 
 CREATE TABLE deal (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     eventId int(11) NOT NULL,
+    venueId int(11) NOT NULL,
     dealTypeId int(11) NOT NULL,
     `name` varchar(255) NOT NULL,
     info text NULL,
-    timeStart varchar(100),
-    timeEnd varchar(100),
+    timeDay int(1) NOT NULL,
+    timeStart varchar(8),
+    timeEnd varchar(8),
     mustBuyDrink tinyint(1) default 0 NOT NULL,
     minPurchase int(1) default 0 NOT NULL,
     maxPurchase int(1) default 0 NOT NULL,
     INDEX event_ind (eventId),
     FOREIGN KEY (eventId) 
         REFERENCES event(id)
+        ON DELETE CASCADE,
+    INDEX venue_ind (venueId),
+    FOREIGN KEY (venueId)
+        REFERENCES venue(id)
         ON DELETE CASCADE
-    
+) ENGINE=INNODB;
+
+CREATE TABLE eventDeal (
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    eventId int(11) NOT NULL,
+    dealId int(11) NOT NULL,
+    INDEX event_ind (eventId),
+    FOREIGN KEY  (eventId)
+        REFERENCES event(id)
+        ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE venueType (
@@ -82,7 +98,7 @@ CREATE TABLE frequencyType (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) NOT NULL,
     info text NULL
-);
+) ENGINE=INNODB;
 
 CREATE TABLE coverType (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

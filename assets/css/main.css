@@ -2213,3 +2213,16 @@ ul#daysContainer {
 #directions-panel {
     height: 50px;
 }
+
+.alert {
+    padding: 1em;
+    margin-bottom: 1.5em;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.alert-error {
+    color: #ad1c22;
+    background-color: rgba(195, 32, 38, 0.1);
+    border-color: rgba(195, 32, 38, 0.25); 
+}

@@ -23,8 +23,16 @@ class CheapskateAPI extends MY_Controller {
 
         printJson($venues);
     }
+    
+    public function findEventsInRadius($userId) {
+        $this->load->model('Event');
+        
+        $events = $this->Event->findEventsInRadius($userId);
+        
+        printJson($events);
+    }
 
-    public function findVenuesInRadius($userId) {
+    public function findVenuesInRadius($userId, $day) {
         if (!is_numeric($userId)) {
             throw new UnexpectedValueException("findVenuesInRadius(): You must provide an integer.");
         }
@@ -34,7 +42,11 @@ class CheapskateAPI extends MY_Controller {
 
         $user = $this->User->load($userId);
         $user = $user[0];
-        $venues = $this->Venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange);
+        $venues = $this->Venue->findAllVenuesByProximity($user->lastLocationLat, 
+                $user->lastLocationLong, 
+                $user->defaultDistanceRange,
+                $day,
+                $user->units);
 
         printJson($venues);
     }
@@ -113,6 +125,12 @@ class CheapskateAPI extends MY_Controller {
         //echo "To Peps: " . $distanceToPeps . ", To Capital: " . $distanceToCap;
 
         printJson($capital);
+    }
+    
+    public function test($userId, $day) {
+        $this->load->model('Venue');
+        // unpack user info here, I guess...
+        printJson($this->Venue->findAllVenuesByProximity($userId, $day));
     }
 
     /** User Stuff * */

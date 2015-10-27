@@ -5,11 +5,11 @@
 								</header>
 								<div class="container 50%">
 												<section>
-																<form method="post" action="signup/submit">
+																<form method="post" action="/signup">
 																				<div>
                         <div class="row">
                             <div class="12u">
-                                <input type="text" name="userName" id="userName" placeholder="username" />
+                                <input type="text" name="username" id="username" placeholder="username" />
                             </div>
                         </div>
                         <div class="row">
@@ -30,7 +30,7 @@
 																																<input type="password" name="password1" id="subject" placeholder="password" />
 																												</div>
 																												<div class="6u 12u(mobile)">
-																																<input type="password" name="password2" id="subject" placeholder="confirm password" />
+																																<input type="password" name="passwordconf" id="subject" placeholder="confirm password" />
 																												</div>
 																								</div>
                         <div class="row">

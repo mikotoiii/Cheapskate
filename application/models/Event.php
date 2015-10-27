@@ -7,18 +7,35 @@
 class Event extends baseModel {
 
     public $id;
-    public $dealId;
+    public $venueId;
     public $eventTypeId;
     public $name;
     public $info;
     public $submittedById;
     public $coverCost;
     public $overTypeId;
+
+    #Items that don't exist in the database
     public $deals = array();
 
     public function __construct() {
         parent::__construct(get_class()); // Needs to be here
         $this->load->database();
+    }
+    
+    /**
+     * OVERRIDE
+     * @param type $id
+     */
+    public function load($id) {
+        
+        $events = parent::load($id);
+        
+        // load deals
+        foreach ($events as &$event) {
+            $deals = $this->Deal->getAllDealsForEvent($event->id);
+            $event->deals = $deals;
+        }
     }
 
     public function getEventById($id) {
@@ -43,7 +60,33 @@ class Event extends baseModel {
     }
 
     public function getEventsByVenue($venueId) {
+        throw new BadMethodCallException("Not implemented yet.");
+    }
+
+    /**
+     * Get all the events within a radius
+     * @param int $userId The user ID
+     * @param int $day the day number
+     * @return array Returns an array of \Event objects
+     */
+    public function findEventsInRadius($userId, $day) {
+        $this->load->model("Event");
+        $this->load->model("User");
+        $this->load->model("Venue");
+        $this->load->model("Deal");
+
+        $user = $this->User->load($userId);
+        $user = $user[0];
+
+        $venues = $this->Venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange, $day);
+
+        $events = array();
+        foreach ($venues as $venue) {
+            print_r($venue); die;
+            $events[] = $this->load($venue->eventId);
+        }
         
+        return $events;
     }
 
 }

@@ -2,7 +2,9 @@
 				<article id="work">
 								<header>
 												<h2>Login!</h2>
-            <?= validation_errors(); ?>
+            <div class="alert-error">
+                <?= validation_errors(); ?>
+            </div>
 								</header>
 								<div class="container 50%">
 												<section>
