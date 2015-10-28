@@ -24,7 +24,11 @@ class Deal extends baseModel {
 				 * @return array(Event)
 				 */
 				public function getAllDealsForEvent($eventId) {								
-								$q = "select * from deal where eventId={$eventId}";
-								return $this->doQuery($q);
+								$q = "select id from deal where eventId={$eventId}";
+								$ids = $this->doQuery($q);
+        
+        $deals = $this->load($ids);
+
+        return $deals;
 				}
 }

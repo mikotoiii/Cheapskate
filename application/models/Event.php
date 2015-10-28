@@ -28,14 +28,15 @@ class Event extends baseModel {
      * @param type $id
      */
     public function load($id) {
-        
+        $this->load->model('Deal');
         $events = parent::load($id);
         
         // load deals
         foreach ($events as &$event) {
-            $deals = $this->Deal->getAllDealsForEvent($event->id);
-            $event->deals = $deals;
+            $event->deals[] = $this->Deal->getAllDealsForEvent($event->id);
         }
+        
+        return $events;
     }
 
     public function getEventById($id) {
@@ -59,8 +60,18 @@ class Event extends baseModel {
         return $events;
     }
 
+    /**
+     * Get all events for a venue
+     * @param int $venueId
+     * @return array Returns an array of a Venue's Events
+     */
     public function getEventsByVenue($venueId) {
-        throw new BadMethodCallException("Not implemented yet.");
+        $this->db->select('id');
+        $this->db->where('venueId', $venueId);
+        $query = $this->db->get('Event');
+        $ids = $query->result();
+        
+        return $this->load($ids);
     }
 
     /**

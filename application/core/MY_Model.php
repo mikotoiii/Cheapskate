@@ -43,7 +43,6 @@ class baseModel extends CI_Model {
                     array_push($ids, $i);
                 }
             }
-            print_r("Table: " . $this->table . "  --  IDs: " . var_dump($ids));
             $this->db->where_in('id', $ids);
         }
         

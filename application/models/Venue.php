@@ -32,6 +32,7 @@ class Venue extends baseModel {
 				
     # Peoperties that don't get persisted
 				public $distanceFromUser;
+    public $events = array();
 
     
     /**
@@ -47,11 +48,14 @@ class Venue extends baseModel {
      * @param type $id
      */
     public function load($id) {
+        $this->load->model('Event');
         $venues = parent::load($id);
         
         foreach ($venues as &$venue) {
-            // load events
+            $venue->events[] = $this->Event->getEventsByVenue($venue->id);
         }
+
+        return $venues;
     }
 				
     /**
@@ -147,7 +151,7 @@ class Venue extends baseModel {
 								ORDER BY distance;";
         
 								$results = $this->doQuery($q);
-
+        
         if (empty($results)) {
             return $results;
         }

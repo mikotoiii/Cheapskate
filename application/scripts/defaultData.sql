@@ -9,6 +9,8 @@ INSERT INTO venue SET name='The Capital Complex', address1='362 Queen St.', city
 INSERT INTO venue SET name='The Cellar Pub', address1='21 Pacey Dr.', city='Fredericton', venueTypeId=1, locationNum=1, latitude=45.9453608, longitude=66.6435921;
 INSERT INTO venue SET name='Rockeys Sports Bar', address1='7 Market Sq.', venueTypeId=1, locationNum=1, latitude=45.2732597, longitude=-66.0654489;
 INSERT INTO venue SET name='Churchills Pub', address1='10 Grannan St.', venueTypeId=1, locationNum=1, latitude=45.2717136, longitude=-66.0631271;
+-- INSERT INTO venue SET name='', address1='', venueTypeId=, locationNum=, latitude=, longitude=;
+
 
 INSERT INTO event SET name='BOGO!', venueId=1, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=5, timeStart='19:00:00', timeEnd='22:00:00';
 INSERT INTO deal  SET name='Buy-One-Get-One', dealTypeId=2, eventId=1, venueId=1, timeDay=5, timeStart='21:00:00', timeEnd='22:00:00';
@@ -37,6 +39,7 @@ INSERT INTO coverType SET `name`='Costume Only';
 INSERT INTO coverType SET `name`='Discount w/ Costume';
 INSERT INTO coverType SET `name`='Invite Only';
 INSERT INTO coverType SET `name`='Industry Night';
+INSERT INTO coverType SET `name`='Staff Night';
 
 INSERT INTO frequencyType SET name='Daily';
 INSERT INTO frequencyType SET name='Weekly';
@@ -51,6 +54,7 @@ INSERT INTO eventType SET name='Special';
 INSERT INTO eventType SET name='Annaversary';
 INSERT INTO eventType SET name='Concert';
 INSERT INTO eventType SET name='Open Mic';
+INSERT INTO eventType SET name='Karaoke';
 INSERT INTO eventType SET name='Promotion';
 
 INSERT INTO role SET role='Admin';
@@ -69,6 +73,7 @@ INSERT INTO role SET role='Guest';
 INSERT INTO dealType SET name='Happy Hour', info='';
 INSERT INTO dealType SET name='BOGO', info='';
 INSERT INTO dealType SET name='Beat The Clock', info='';
+INSERT INTO dealType SET name='Reverse Beat The Clock', info='';
 INSERT INTO dealType SET name='Power Hour', info='';
 INSERT INTO dealType SET name='With Purchase Special', info='';
 INSERT INTO dealType SET name='Appetizer Special', info='';

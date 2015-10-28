@@ -129,8 +129,10 @@ class CheapskateAPI extends MY_Controller {
     
     public function test($userId, $day) {
         $this->load->model('Venue');
-        // unpack user info here, I guess...
-        printJson($this->Venue->findAllVenuesByProximity($userId, $day));
+        $this->load->model('User');
+        $user = $this->User->load($userId);
+        $user = $user[0];
+        printJson($this->Venue->findAllVenuesByProximity($user->lastLocationLat, $user->lastLocationLong, $user->defaultDistanceRange, $day, $user->unitType));
     }
 
     /** User Stuff * */
