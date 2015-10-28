@@ -160,7 +160,7 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@';
 
 /*
 |--------------------------------------------------------------------------
@@ -215,7 +215,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 2;
 
 /*
 |--------------------------------------------------------------------------
@@ -374,7 +374,7 @@ $config['sess_cookie_name'] = 'cheapskate';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = 'usersession';
 $config['sess_table_name'] = 'usersession';
-$config['sess_match_ip'] = true;
+$config['sess_match_ip'] = false;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = false;
 
