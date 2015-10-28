@@ -369,7 +369,7 @@ $config['encryption_key'] = 'gggggy65#SSa78908jnqp5@2210jbexA';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'database';
+$config['sess_driver'] = 'file';
 $config['sess_cookie_name'] = 'cheapskate';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = 'usersession';

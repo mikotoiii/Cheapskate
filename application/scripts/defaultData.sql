@@ -9,6 +9,7 @@ INSERT INTO venue SET name='The Capital Complex', address1='362 Queen St.', city
 INSERT INTO venue SET name='The Cellar Pub', address1='21 Pacey Dr.', city='Fredericton', venueTypeId=1, locationNum=1, latitude=45.9453608, longitude=66.6435921;
 INSERT INTO venue SET name='Rockeys Sports Bar', address1='7 Market Sq.', venueTypeId=1, locationNum=1, latitude=45.2732597, longitude=-66.0654489;
 INSERT INTO venue SET name='Churchills Pub', address1='10 Grannan St.', venueTypeId=1, locationNum=1, latitude=45.2717136, longitude=-66.0631271;
+INSERT INTO venue SET name='Sommerset Pub', address1='367 Sommerset St.', venueTypeId=1, locationNum=1, latitude=null, longitude=null;
 -- INSERT INTO venue SET name='', address1='', venueTypeId=, locationNum=, latitude=, longitude=;
 
 
