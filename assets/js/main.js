@@ -8,7 +8,7 @@ var user;
 var curDay;
 
 var weekdays = [];
-    weekdays[0] = "Sunday";
+    weekdays[7] = "Sunday";
     weekdays[1] = "Monday";
     weekdays[2] = "Tuesday";
     weekdays[3] = "Wednesday";
@@ -91,28 +91,32 @@ function populateDays() {
 
 function populateDeals(day) {
     
-    if (day > (testData.days.length - 1)) {
-        return;
-    }
-    
-    var data = testData.days[day];
-    var deals = data.deals;
-    
-    var ul = $("#day" + day + " ul");
-    $.each(deals, function(ind) {
-        var deal = deals[ind];
-        var li = $("<li class='dealItem'></li>");
-        var venue = getVenue(deal.venueId);
-        li.append("<i class='fa fa-" + getCategoryIcon(deal.category) + "'></i>");
-        li.append("<div class='venue venueTextLink' data-id='" + deal.venueId + "'>" + venue.name + "</div>");
-        li.append("<div class='category'>" + deal.category + " | " + deal.type) + "</div>";
-        li.append("<div class='time'><i class='fa fa-clock-o'></i> " + deal.timeStart + " - " + deal.timeEnd + "</div>");
-        li.append("<div class='timeTil'></div>");
-        li.append("<div class='info'>" + deal.info + "</div>");
+//    if (day > (venues.days.length - 1)) {
+//        return;
+//    }
+    for (var k=0; k<venueData.length; k++) {
+         var venue = venueData[k];
+         var events = venue.events;
 
-        ul.append(li);
-    });
-    
+        for (var i=0; i<events.length; i++) {
+             var event = events[i][0];
+             var deals = event.deals;
+            
+            for (var j=0; j<deals.length; j++) {
+                 var deal = deals[j][0];
+                 var ul = $("#day" + event.timeDay + " ul");
+                 var li = $("<li class='dealItem'></li>");
+                     li.append("<i class='fa fa-" + getCategoryIcon(deal.category) + "'></i>");
+                     li.append("<div class='venue venueTextLink' data-id='" + deal.venueId + "'>" + venue.name + "</div>");
+                     li.append("<div class='category'>" + deal.dealType + " | " + deal.dealType) + "</div>";
+                     li.append("<div class='time'><i class='fa fa-clock-o'></i> " + deal.timeStart + " - " + deal.timeEnd + "</div>");
+                     li.append("<div class='timeTil'></div>");
+                     li.append("<div class='info'>" + deal.info + "</div>");
+
+                     ul.append(li);
+            }
+        }
+    }
 }
 
 function populateVenue(venue) {

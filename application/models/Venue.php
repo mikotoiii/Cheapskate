@@ -33,6 +33,7 @@ class Venue extends baseModel {
     # Peoperties that don't get persisted
 				public $distanceFromUser;
     public $events = array();
+    public $daysWithEvents = array();
 
     
     /**
@@ -53,6 +54,7 @@ class Venue extends baseModel {
         
         foreach ($venues as &$venue) {
             $venue->events[] = $this->Event->getEventsByVenue($venue->id);
+            $venue->daysWithEvents = $this->findDaysWithEvents($venue->id);
         }
 
         return $venues;
@@ -135,6 +137,21 @@ class Venue extends baseModel {
         //$day = date("N", $end);
         $endHour = date("H:i:s", $end);
         
+        if ($day === '%') {
+            $day = date("N", time());
+            
+            $mondayDiff = $day % 1;
+            $sundayDiff = $day % 7;
+            
+            $beginning = time() - $mondayDiff * (24 * 3600);
+            $ending = time() + $sundayDiff * (24 * 3600);
+            
+            //$where = "timeStart > {$beginning} AND timeEnd";
+            $where = "";
+        } else {
+            $where = "WHERE timeDay={$day}";
+        }
+        
 								$q ="SELECT
 								v.id, (
 										{$earthRadius} * acos (
@@ -146,7 +163,7 @@ class Venue extends baseModel {
 										)
 								) AS distance
 								FROM venue as v
-        WHERE v.id IN (SELECT DISTINCT venueId FROM event WHERE timeDay={$day})
+        WHERE v.id IN (SELECT DISTINCT venueId FROM event {$where})
 								HAVING distance < {$distance}
 								ORDER BY distance;";
         
@@ -192,6 +209,32 @@ class Venue extends baseModel {
 				public function findVenuesWithDeals($lat, $lng) {
 								
 				}
+    
+    /**
+     * Get an array of the days with deals available
+     * @param mixed $id An ID or an array of IDs
+     * @return array Returns an array of 
+     */
+    public function findDaysWithEvents($id) {
+        
+        if (is_numeric($id)) {
+            $this->db->where('venueId', $id);
+        } elseif (is_array($id)) {
+            $this->db->where_in('venueId', $id);
+        }
+        
+        $this->db->select('timeDay');
+        $this->db->distinct();
+        $query = $this->db->get('event');
+        $results = $query->result();
+                
+        $days = array();
+        foreach ($results as $result) {
+            $days[] = $result->timeDay;
+        }
+        
+        return $days;
+    }
 				
 				public function getName() {
 								return $this->name;

@@ -13,15 +13,18 @@ INSERT INTO venue SET name='Sommerset Pub', address1='367 Sommerset St.', venueT
 -- INSERT INTO venue SET name='', address1='', venueTypeId=, locationNum=, latitude=, longitude=;
 
 
-INSERT INTO event SET name='BOGO!', venueId=1, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=5, timeStart='19:00:00', timeEnd='22:00:00';
+INSERT INTO event SET name='BOGO!', venueId=1, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=4, timeStart='19:00:00', timeEnd='22:00:00';
 INSERT INTO deal  SET name='Buy-One-Get-One', dealTypeId=2, eventId=1, venueId=1, timeDay=5, timeStart='21:00:00', timeEnd='22:00:00';
 INSERT INTO deal  SET name='Half-price Apps', dealTypeId=6, eventId=1, venueId=1, timeDay=5, timeStart='19:00:00', timeEnd='21:00:00';
 
-INSERT INTO event SET name='Power Hour', venueId=3, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=5, timeStart='23:00:00', timeEnd='00:00:00';
-INSERT INTO deal  SET name='Power Hour!', dealTypeId=4, eventId=2, venueId=3, timeDay=5, timeStart='23:00:00', timeEnd='00:00:00';
+INSERT INTO event SET name='Power Hour', venueId=3, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=4, timeStart='23:00:00', timeEnd='00:00:00';
+INSERT INTO deal  SET name='Power Hour!', dealTypeId=4, eventId=2, venueId=3, timeDay=4, timeStart='23:00:00', timeEnd='00:00:00';
 
 INSERT INTO event SET name='Cheapnight', venueId=3, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=5, timeStart='23:00:00', timeEnd='00:00:00';
 INSERT INTO deal  SET name='Poor Time!', dealTypeId=4, eventId=3, venueId=3, timeDay=5, timeStart='21:00:00', timeEnd='22:00:00';
+
+INSERT INTO event SET name='Crappo', venueId=3, eventTypeId=1, submittedById=1, coverTypeId=1, timeDay=6, timeStart='23:00:00', timeEnd='00:00:00';
+INSERT INTO deal  SET name='Lame', dealTypeId=3, eventId=4, venueId=3, timeDay=6, timeStart='21:00:00', timeEnd='22:00:00';
 
 INSERT INTO coverType SET `name`='None';
 INSERT INTO coverType SET `name`='Free';

@@ -17,13 +17,13 @@
 																																</div>
 																												</div>
 																												<ul id="daysContainer" class="slides">
-																																<li id="day0"></li>
 																																<li id="day1"></li>
 																																<li id="day2"></li>
 																																<li id="day3"></li>
 																																<li id="day4"></li>
 																																<li id="day5"></li>
 																																<li id="day6"></li>
+																																<li id="day7"></li>
 																												</ul>
 																								</div>
 																				</section>

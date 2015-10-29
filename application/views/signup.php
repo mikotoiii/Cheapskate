@@ -52,7 +52,7 @@
 																</form>
 																<footer>
 																				<div>...or register with Facebook!</div>
-																				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+																				<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();"></fb:login-button>
 																</footer>
 												</section>
 								</div>

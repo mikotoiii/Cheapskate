@@ -8,6 +8,7 @@ class Deal extends baseModel {
 
 				public $id;
     public $eventId;
+    public $venueId;
     public $dealTypeId;
     public $info;
     public $timeStart;

@@ -11,6 +11,9 @@ class Event extends baseModel {
     public $eventTypeId;
     public $name;
     public $info;
+    public $timeDay;
+    public $timeStart;
+    public $timeEnd;
     public $submittedById;
     public $coverCost;
     public $overTypeId;
