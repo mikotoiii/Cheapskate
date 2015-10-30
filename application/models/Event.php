@@ -71,7 +71,7 @@ class Event extends baseModel {
     public function getEventsByVenue($venueId) {
         $this->db->select('id');
         $this->db->where('venueId', $venueId);
-        $query = $this->db->get('Event');
+        $query = $this->db->get('event');
         $ids = $query->result();
         
         return $this->load($ids);
