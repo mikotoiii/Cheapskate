@@ -96,7 +96,6 @@ class Event extends baseModel {
 
         $events = array();
         foreach ($venues as $venue) {
-            print_r($venue); die;
             $events[] = $this->load($venue->eventId);
         }
         

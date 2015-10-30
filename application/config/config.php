@@ -27,6 +27,8 @@ switch (ENVIRONMENT) {
 								break;
 }
 
+$config['base_url'] = ''; // OVERRIDE THE ABOVE
+
 /*
 |--------------------------------------------------------------------------
 | Index File
