@@ -1,7 +1,7 @@
 <div class="wrapper style1">
 				<article id="work">
 								<header>
-												<h2>Signup!</h2>
+												<h2>Add a new venue!</h2>
 								</header>
 								<div class="container 50%">
 												<section>
@@ -59,13 +59,5 @@
 				</article>
 </div>
 
-<script type='text/javascript'>
-    $(function() {
-        $("#dob").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-70:-19",
-            defaultDate: "-19y"
-        });
-    });
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=$googleKey;?>&signed_in=true&libraries=places&callback=initAutocomplete"
+        async defer></script>

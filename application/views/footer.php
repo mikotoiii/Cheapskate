@@ -32,10 +32,9 @@
     </article>
 </div>
 <!-- Scripts -->
-<script src="<?=base_url();?>assets/js/vendor/jquery-1.9.1.min.js"></script>
-<script src="<?=base_url();?>assets/js/vendor/skel.min.js"></script>
-<script src="<?=base_url();?>assets/js/vendor/skel-viewport.min.js"></script>
-<script src="<?=base_url();?>assets/js/util.js"></script>
+<script src="<?=base_url();?>assets/js/vendor/skel.min.js" type="text/javascript"></script>
+<script src="<?=base_url();?>assets/js/vendor/skel-viewport.min.js" type="text/javascript"></script>
+<script src="<?=base_url();?>assets/js/util.js" type="text/javascript"></script>
 
 <?
 foreach ($javascripts as $js) {

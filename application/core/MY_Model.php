@@ -12,6 +12,7 @@ class baseModel extends CI_Model {
     protected $clazz = null;
     protected $reflector = null;
     protected $table = null;
+    protected $properties = null;
 
     public function __construct($clazz) {
         $this->clazz = $clazz;
@@ -19,6 +20,7 @@ class baseModel extends CI_Model {
         try {
             $this->reflector = new ReflectionClass($this->clazz);
             $this->table = strtolower($this->reflector->getShortName());
+            $this->properties = $this->reflector->getProperties(ReflectionProperty::IS_PUBLIC);
         } catch (Exception $e) {
             error_log($e);
         }
@@ -31,7 +33,6 @@ class baseModel extends CI_Model {
      */
     public function load($id) {
 
-        $properties = $this->getThisProperties();
         if (is_numeric($id)) {
             $this->db->where('id', $id);
         } else if (is_array($id) && count($id) > 0) {
@@ -51,7 +52,7 @@ class baseModel extends CI_Model {
         
         $items = array();
         foreach ($results as $result) {
-            foreach ($properties as $property) {
+            foreach ($this->properties as $property) {
                 if (strtolower($property->class) !== $this->table) {
                     continue;
                 }
@@ -80,10 +81,8 @@ class baseModel extends CI_Model {
         
         $this->load->model($model);
         $item = $this->{$model}->load($data->id);
-        
-        $properties = $this->reflector->getProperties(ReflectionProperty::IS_PUBLIC);
-        
-        foreach ($properties as $property) {
+       
+        foreach ($this->properties as $property) {
             if (strtolower($property->class) !== $this->table) {
                 continue;
             }
@@ -101,7 +100,18 @@ class baseModel extends CI_Model {
         
     }
     
+    /**
+     * Save the current object to the DB
+     */
+    public function save() {
+        $this->update($this);
+    }
+    
     public function create($data) {
+        throw Exception("Not implemented yet.");
+    }
+    
+    public function delete($id) {
         throw Exception("Not implemented yet.");
     }
     
@@ -114,8 +124,7 @@ class baseModel extends CI_Model {
      */
     public function exists($key, $value) {
         
-        $this->db->where($key, $value);
-        $query = $this->db->select("id", strtolower($this->clazz));
+        $query = $this->db->where($key, $value)->select('id')->get($this->table);
         $result = $query->result();
         
         return !empty($result) ? $result : false;
@@ -131,17 +140,6 @@ class baseModel extends CI_Model {
         $query = $this->db->query($q);
         return $query->result();
     }
-    
-    /**
-     * Returns an object with all the PUBLIC properties for this (child instance) class
-     * @return array An array of objects containing the properties 
-     */
-    protected function getThisProperties() {
-        $properties = $this->reflector->getProperties(ReflectionProperty::IS_PUBLIC);
-        
-        return $properties;
-    }
-
 }
 
 class My_Model {} // CI needs this

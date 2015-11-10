@@ -2226,3 +2226,7 @@ ul#daysContainer {
     background-color: rgba(195, 32, 38, 0.1);
     border-color: rgba(195, 32, 38, 0.25); 
 }
+
+div.ui-datepicker { 
+    font-size:0.8em;
+}

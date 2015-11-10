@@ -1,7 +1,7 @@
 <div class="wrapper style1">
-				<article id="work">
+				<article id="deals">
 								<header>
-												<h2 id="dayTitle">Date</h2>
+												<h2 id="dayTitle"></h2>
 								</header>
 								<div class="container">
 												<div class="row">

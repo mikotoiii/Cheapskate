@@ -98,16 +98,13 @@ class User extends baseModel {
         $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
         $data['password'] = $passwordHash;
         
-        $properties = $this->getThisProperties();
-        foreach ($properties as $property) {
+        foreach ($this->properties as $property) {
             try {
                 if (isset($data[$property->name])) {
                     $this->{$property->name} = $data->{$property->name};
                 }
             } catch (Exception $e) {
-                //throw Exception("Property " . $ . $e->getMessage())
                 error_log($e);
-                //die;
             }
         }
     }

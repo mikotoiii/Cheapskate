@@ -12,7 +12,6 @@ class CheapskateAPI extends MY_Controller {
     }
 
     public function index() {
-        //$this->load->view('welcome_message');
         $json = "welcome to my API!";
         echo $json;
     }
