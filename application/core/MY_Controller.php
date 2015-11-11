@@ -27,6 +27,9 @@ class MY_Controller extends CI_Controller {
         
         if ($this->loginRequired && !$this->session->userdata("userLoggedIn")) {
             $this->session->authErrorMsg = "You must be logged in. Please login first.";
+        } elseif (($this->loginRequired && $this->session->userdata("userLoggedIn")) && 
+                  ($this->adminRequired && $this->session->userdata("userRole") != 1)) {
+            $this->session->authErrorMsg = "You ain't no 'ministrator, you rail-thin little turkey!";
         }
                 
         if ($data === null) {
@@ -42,6 +45,8 @@ class MY_Controller extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('mainNav', $data);
         
+        
+        //TODO: Do better than this.
         if (strlen($this->session->authErrorMsg) > 0) {
             $data["authErrorMsg"] = $this->session->authErrorMsg;
             $this->load->view('showErrors', $data);

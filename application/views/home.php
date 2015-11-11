@@ -6,6 +6,7 @@
 								<div class="container">
 												<div class="row">
 																<div class="12u">
+                    <h6>Barely Racist</h6>
 																				<section class="box style1">
 																								<div id="daysWrapper" class="flexslider">
 																												<div id="venueDetailsContainer" style="display:none;">

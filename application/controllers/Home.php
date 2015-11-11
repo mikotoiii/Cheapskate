@@ -14,7 +14,7 @@ class Home extends MY_Controller {
 								$this->addJavascript("directions");
 								$this->addJavascript("vendor/jquery.flexslider");
         
-        $this->addCss("vendor/flexslider");
+        $this->addCss("flexslider");
         $this->setTitle("Deals!");
 								$this->showView('home');
 				}

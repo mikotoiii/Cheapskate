@@ -56,11 +56,13 @@ class Login extends MY_Controller {
                     'userName'  => $this->activeUser->userName,
                     'email'     => $this->activeUser->email,
                     'authToken' => $this->activeUser->authToken,
+                    'userRole'  => $this->activeUser->userRoleId,
                     'lastSeen'  => date("Y-m-d")
                 );
                 // Add user data to session
                 $this->session->set_userdata('userLoggedIn', true);
                 $this->session->set_userdata('userData', $sessionData);
+                $this->session->set_userdata('userRole', $sessionData['userRole']);
                 redirect("home");
                 
             } else {
