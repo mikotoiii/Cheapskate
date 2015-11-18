@@ -14,8 +14,8 @@ class baseModel extends CI_Model {
     protected $table = null;
     protected $properties = null;
 
-    public function __construct($clazz) {
-        $this->clazz = $clazz;
+    public function __construct() {
+        $this->clazz = get_class($this);
         
         try {
             $this->reflector = new ReflectionClass($this->clazz);
@@ -53,6 +53,7 @@ class baseModel extends CI_Model {
         $items = array();
         foreach ($results as $result) {
             foreach ($this->properties as $property) {
+                // Ignore any public properties from the inherited class
                 if (strtolower($property->class) !== $this->table) {
                     continue;
                 }
@@ -77,7 +78,7 @@ class baseModel extends CI_Model {
      * @param type $data
      */
     public function update($data) {
-        $model = ucfirst($this->table);
+        $model = $this->clazz; //ucfirst($this->table);
         
         $this->load->model($model);
         $item = $this->{$model}->load($data->id);

@@ -22,7 +22,7 @@ class Event extends baseModel {
     public $deals = array();
 
     public function __construct() {
-        parent::__construct(get_class()); // Needs to be here
+        parent::__construct(); // Needs to be here
         $this->load->database();
     }
     

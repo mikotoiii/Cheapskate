@@ -41,7 +41,7 @@ class Venue extends baseModel {
      * Construct a venue
      */
     public function __construct() {
-								parent::__construct(get_class()); // Needs to be here
+								parent::__construct(); // Needs to be here
         $this->load->database();
     }
     
