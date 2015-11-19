@@ -32,7 +32,7 @@ class Signup extends MY_Controller {
     private function doSubmit() {
 
         // Check validation for user input in SignUp form
-
+        $this->load->library('form_validation');
         if ($this->form_validation->run() === false) {
             $this->load->view('registration_form');
         } else {
