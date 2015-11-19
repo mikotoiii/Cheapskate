@@ -35,6 +35,7 @@ class Signup extends MY_Controller {
         $this->load->library('form_validation');
         if ($this->form_validation->run() === false) {
             $this->load->view('registration_form');
+            
         } else {
             $data = array(
                 'user_name' => $this->input->post('username'),
