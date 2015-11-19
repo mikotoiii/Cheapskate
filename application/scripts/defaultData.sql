@@ -99,3 +99,6 @@ INSERT INTO venueType SET name='Outdoors';
 
 INSERT INTO user SET userName='boyer', password='$2y$10$r9uLRgY4MAgfoEEGzRRjGu2YFLF71d5Ob4mYNdfKqHIj5GC4GgKVC', authToken='blood', lastLocationLat=45.271111, lastLocationLong=-66.059719, nameFirst='Sean', nameLast='Boyer', email='seanboyer.sj@gmail.com', userRoleId=1, dob='1985-01-10';
 INSERT INTO userRole SET userId=1, roleId=1;
+
+INSERT INTO user SET userName='sboyer', password='$2y$10$P8u8Nu00jNHzccag7qB7cuVoG/V9D.BcU/j1uB6DtREw0TUvI5nBK', authToken='blood', lastLocationLat=45.271111, lastLocationLong=-66.059719, nameFirst='Stephen', nameLast='Boyer', email='boyer.steve@gmail.com', userRoleId=1, dob='1986-11-26';
+INSERT INTO userRole SET userId=2, roleId=1;
