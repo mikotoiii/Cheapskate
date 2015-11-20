@@ -94,19 +94,17 @@ class User extends baseModel {
     
     public function addNewUser($data) {
         
+        if ($this->getUserByUserNameOrEmail($data['userName'])){
+            return false;
+        }
         // Override and set some data before entering it into the DB
         $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
         $data['password'] = $passwordHash;
         
-        foreach ($this->properties as $property) {
-            try {
-                if (isset($data[$property->name])) {
-                    $this->{$property->name} = $data->{$property->name};
-                }
-            } catch (Exception $e) {
-                error_log($e);
-            }
-        }
+        $data['dob'] = date("Y-m-d", strtotime($data['dob']));
+        // Insert the modified data into the DB
+        $this->db->insert('user', $data);
+        return true;
     }
 
 }
