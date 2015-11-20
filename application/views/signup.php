@@ -3,7 +3,11 @@
         <header>
             <h2>Signup!</h2>
             <div class="alert-error">
+                
                 <?= validation_errors(); ?>
+            </div>
+            <div class="alert">
+                <?php echo $message_display; ?>
             </div>
         </header>
         <div class="container 50%">
